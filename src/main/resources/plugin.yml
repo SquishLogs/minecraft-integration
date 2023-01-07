@@ -1,0 +1,7 @@
+name: SquishLogs
+version: 1.0.0 (Development)
+authors: [Livaco, Owain]
+main: wtf.squish.minecraft.SquishLogs
+api-version: 1.19
+website: https://squish.wtf/
+prefix: Squish Logs
