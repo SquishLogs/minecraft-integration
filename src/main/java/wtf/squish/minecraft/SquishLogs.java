@@ -57,30 +57,18 @@ public class SquishLogs extends JavaPlugin {
             Output.print("Failed to receive information about the server.");
             Output.print("Refusing to go any further.");
             return;
-        } else {
-            Output.print("Server information received.");
-            if(!serverInfo.getServerType().equals("Minecraft")) {
-                Output.print("Uh, this isn't a minecraft server type...");
-                Output.print("Unsure what to do here, but we'll just continue on and hope it's fine.");
-            }
-
-            Output.print("  Server: " + serverInfo.getName() + " (" + serverInfo.getIpAddress() + ")");
-            Output.print("  Server/Socket Region: " + serverInfo.getRegionID() + " / " + serverInfo.getSocket().getContinent());
         }
 
-        // Set up the websocket
-//        URI uri;
-//        try {
-//            uri = new URI("ws://localhost:8765");
-//        } catch(URISyntaxException e) {
-//            Output.print("Failed to find websocket host.");
-//            throw new RuntimeException(e);
-//        }
-//        webSocketClient = new LogWebsocketClient(uri);
-//        webSocketClient.connect();
+        Output.print("Server information received.");
+        if(!serverInfo.getServerType().equals("Minecraft")) {
+            Output.print("Uh, this isn't a minecraft server type...");
+            Output.print("Unsure what to do here, but we'll just continue on and hope it's fine.");
+        }
+        Output.print("  Server: " + serverInfo.getName() + " (" + serverInfo.getIpAddress() + ")");
+        Output.print("  Server/Socket Region: " + serverInfo.getRegionID() + " / " + serverInfo.getSocket().getContinent());
 
         // Done.
-        Output.print("Loaded successfully.");
+        Output.print("Finished loading.");
     }
 
     /**
