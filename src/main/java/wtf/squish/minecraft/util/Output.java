@@ -2,9 +2,6 @@ package wtf.squish.minecraft.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
-import javax.swing.text.Utilities;
 
 /**
  * Handles logging to the console.
