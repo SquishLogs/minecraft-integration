@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import wtf.squish.minecraft.entities.ServerInformation;
 import wtf.squish.minecraft.loggers.PlayerLogger;
@@ -15,6 +16,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -129,4 +131,18 @@ public class SquishLogs extends JavaPlugin {
      * @return The server info.
      */
     public static ServerInformation getServerInfo() {return serverInfo;}
+
+    public static void registerPlayer(Player player) {
+        Gson gson = new Gson();
+        HashMap<String, Object> playerInfo = new HashMap<String, Object>();
+        playerInfo.put("name", player.getName());
+        playerInfo.put("platform_id", player.getUniqueId().toString());
+        HashMap<String, Object> values = new HashMap<>();
+        values.put("type", "player");
+        values.put("player", playerInfo);
+
+        String json = gson.toJson(values);
+        Output.print(json);
+        SquishLogs.getWebSocket().send(json);
+    }
 }
