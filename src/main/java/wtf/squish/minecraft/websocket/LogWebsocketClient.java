@@ -63,8 +63,6 @@ public class LogWebsocketClient extends WebSocketClient {
     @Override
     public void onClose(int code, String reason, boolean remote) {
         Output.print("Lost connection to websocket.");
-        Output.print("Reconnecting...");
-        this.connect();
     }
 
     /**
