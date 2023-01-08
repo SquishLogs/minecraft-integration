@@ -57,9 +57,8 @@ public class SquishLogs extends JavaPlugin {
         }
         Output.print("  Server: " + serverInfo.getName() + " (" + serverInfo.getIpAddress() + ")");
         Output.print("  Server/Socket Region: " + serverInfo.getRegionID() + " / " + serverInfo.getSocket().getContinent());
-
-        // Done.
-        Output.print("Finished loading.");
+        Output.print("Attempting to connect to websocket...");
+        connectToWebsocket();
     }
 
     /**
@@ -108,4 +107,10 @@ public class SquishLogs extends JavaPlugin {
         serverInfo = gson.fromJson(responseBody, ServerInformation.class);
         return true;
     }
+    public static void connectToWebsocket() {
+        webSocketClient = new LogWebsocketClient(URI.create(serverInfo.getSocket().getIpAddress()));
+        webSocketClient.connect();
+    }
+
+    public static ServerInformation getServerInfo() {return serverInfo;}
 }

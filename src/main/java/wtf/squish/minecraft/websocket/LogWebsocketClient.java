@@ -1,11 +1,14 @@
 package wtf.squish.minecraft.websocket;
 
+import com.google.gson.Gson;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.framing.CloseFrame;
 import org.java_websocket.handshake.ServerHandshake;
+import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.util.Output;
 
 import java.net.URI;
+import java.util.HashMap;
 
 /**
  * Handles the talking to the websocket
@@ -26,8 +29,20 @@ public class LogWebsocketClient extends WebSocketClient {
      */
     @Override
     public void onOpen(ServerHandshake handshakedata) {
-        send("test");
-        Output.print("Connected to websocket.");
+        Output.print("Connected to websocket. Attempting authentication...");
+        Gson gson = new Gson();
+
+        // Not sure if this or hard coding with concat it is better practice, easy change if i decide against one tho
+        HashMap<String, String> authValues = new HashMap<>();
+        authValues.put("type", "auth");
+        authValues.put("community", SquishLogs.getConfigInstance().getString("community"));
+        authValues.put("token", SquishLogs.getServerInfo().getToken());
+        send(gson.toJson(authValues));
+
+        Output.print("Archiving previous logs...");
+        HashMap<String, String> archiveValues = new HashMap<>();
+        archiveValues.put("type", "archive");
+        send(gson.toJson(archiveValues));
     }
 
     /**
