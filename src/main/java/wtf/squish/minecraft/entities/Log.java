@@ -3,7 +3,6 @@ package wtf.squish.minecraft.entities;
 import com.google.gson.Gson;
 import org.bukkit.entity.Player;
 import wtf.squish.minecraft.SquishLogs;
-import wtf.squish.minecraft.util.Output;
 
 import java.awt.*;
 import java.util.ArrayList;

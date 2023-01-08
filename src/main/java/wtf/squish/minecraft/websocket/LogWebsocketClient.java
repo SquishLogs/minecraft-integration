@@ -1,14 +1,11 @@
 package wtf.squish.minecraft.websocket;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.framing.CloseFrame;
 import org.java_websocket.handshake.ServerHandshake;
 import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.AuthResponse;
-import wtf.squish.minecraft.entities.Fragment;
 import wtf.squish.minecraft.entities.Log;
 import wtf.squish.minecraft.util.Output;
 

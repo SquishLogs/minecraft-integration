@@ -1,16 +1,14 @@
 package wtf.squish.minecraft.loggers;
 
-import com.google.gson.Gson;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import wtf.squish.minecraft.SquishLogs;
-import wtf.squish.minecraft.entities.Fragment;
 import wtf.squish.minecraft.entities.Log;
-import wtf.squish.minecraft.util.Output;
 
 import java.awt.*;
-import java.util.HashMap;
 
 /**
  * Logger for player actions.
