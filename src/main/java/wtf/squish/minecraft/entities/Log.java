@@ -1,9 +1,11 @@
 package wtf.squish.minecraft.entities;
 
 import com.google.gson.Gson;
+import org.bukkit.entity.Player;
 import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.util.Output;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,6 +33,53 @@ public class Log {
     public Log addFragment(Fragment fragment) {
         this.fragments.add(fragment);
         return this;
+    }
+
+    /**
+     * Adds a new player fragment.
+     * @param player The player.
+     * @return The log object.
+     */
+    public Log addFragment(Player player) {
+        return this.addFragment(new Fragment(player));
+    }
+
+    /**
+     * Adds a text fragment with a color.
+     * @param string The text.
+     * @param color The color of the text.
+     * @return The log object.
+     */
+    public Log addFragment(String string, Color color) {
+        return this.addFragment(new Fragment(string, color));
+    }
+
+    /**
+     * Adds a text fragment.
+     * @param string The text.
+     * @return The log object.
+     */
+    public Log addFragment(String string) {
+        return this.addFragment(new Fragment(string, null));
+    }
+
+    /**
+     * Adds a number fragment with a color.
+     * @param number The number.
+     * @param color The color of the number.
+     * @return The log object.
+     */
+    public Log addFragment(int number, Color color) {
+        return this.addFragment(new Fragment(number, color));
+    }
+
+    /**
+     * Adds a number fragment.
+     * @param number The number.
+     * @return The log object.
+     */
+    public Log addFragment(int number) {
+        return this.addFragment(new Fragment(number, null));
     }
 
     /**

@@ -25,8 +25,8 @@ public class PlayerLogger implements Listener {
 
         // Log them
         new Log("Player | Connect")
-                .addFragment(new Fragment(event.getPlayer()))
-                .addFragment(new Fragment("joined the server.", null))
+                .addFragment(event.getPlayer())
+                .addFragment("joined the server.")
                 .send();
     }
 }

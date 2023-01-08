@@ -80,7 +80,7 @@ public class LogWebsocketClient extends WebSocketClient {
 
         // Start Log
         new Log("System")
-                .addFragment(new Fragment("Server started.", null))
+                .addFragment("Server started.")
                 .send();
     }
 
