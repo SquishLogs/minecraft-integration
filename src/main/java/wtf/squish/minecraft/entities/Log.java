@@ -32,7 +32,6 @@ public class Log {
         values.put("log", this.fragments);
 
         String log = gson.toJson(values);
-        Output.print(log);
         SquishLogs.getWebSocket().send(log);
     }
 

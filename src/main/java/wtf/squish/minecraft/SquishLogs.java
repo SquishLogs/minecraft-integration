@@ -142,7 +142,6 @@ public class SquishLogs extends JavaPlugin {
         values.put("player", playerInfo);
 
         String json = gson.toJson(values);
-        Output.print(json);
         SquishLogs.getWebSocket().send(json);
     }
 }
