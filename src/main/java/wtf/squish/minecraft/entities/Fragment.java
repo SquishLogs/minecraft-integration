@@ -19,7 +19,6 @@ public class Fragment {
     }
     public Fragment(Player player) {
         this.type = FragmentType.PLAYER;
-        this.data.clear();
         this.data.put("name", player.getName());
         this.data.put("platform_name", player.getName());
         this.data.put("platform_id", player.getUniqueId().toString());
@@ -28,9 +27,8 @@ public class Fragment {
     }
     public Fragment(String string, Color color) {
         this.type = FragmentType.TEXT;
-        this.data.clear();
         this.data.put("text", string);
-        this.data.put("color", color);
+        this.data.put("color", formatColor(color));
     }
     public Fragment(int number, Color color) {
         this(String.valueOf(number), color);
@@ -42,5 +40,10 @@ public class Fragment {
     public HashMap<String, Object> getData() {return data;}
     public void addData(String key, Object value) {
         this.data.put(key, value);
+    }
+
+    private static String formatColor(Color color) {
+        if(color == null) return null;
+        return color.getRed() + "," + color.getGreen() + "," + color.getBlue();
     }
 }
