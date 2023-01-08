@@ -75,11 +75,11 @@ public class SquishLogs extends JavaPlugin {
      */
     public static boolean getWebsocketInfo() {
         HttpRequest request = HttpRequest.newBuilder()
-            .GET()
-            .uri(URI.create(getConfigInstance().getString("domain") + "/api/v1/server"))
-            .setHeader("User-Agent", "SquishLogsMinecraft/1.0.0 (+https://squish.wtf/)")
-            .setHeader("X-Game-Server-Token", getConfigInstance().getString("token"))
-            .build();
+                .GET()
+                .uri(URI.create(getConfigInstance().getString("domain") + "/api/v1/server"))
+                .setHeader("User-Agent", "SquishLogsMinecraft/1.0.0 (+https://squish.wtf/)")
+                .setHeader("X-Game-Server-Token", getConfigInstance().getString("token"))
+                .build();
 
         CompletableFuture<HttpResponse<String>> response = httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 
@@ -102,15 +102,24 @@ public class SquishLogs extends JavaPlugin {
 
         // Parse the JSON it gave us
         Gson gson = new GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .create();
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
         serverInfo = gson.fromJson(responseBody, ServerInformation.class);
         return true;
     }
+
+    /**
+     * Attempts connection to the websocket.
+     */
     public static void connectToWebsocket() {
         webSocketClient = new LogWebsocketClient(URI.create(serverInfo.getSocket().getIpAddress()));
         webSocketClient.connect();
     }
 
+
+    /**
+     * Gets the current server's information, fetched from the API.
+     * @return The server info.
+     */
     public static ServerInformation getServerInfo() {return serverInfo;}
 }
