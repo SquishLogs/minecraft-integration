@@ -11,6 +11,7 @@ import wtf.squish.minecraft.util.Output;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Handles the talking to the websocket
@@ -18,6 +19,7 @@ import java.util.HashMap;
  */
 public class LogWebsocketClient extends WebSocketClient {
     private boolean needsReconnected = false;
+    private List<String> reconnectionQueue;
     private boolean stayClosed = false;
 
     /**
@@ -34,13 +36,12 @@ public class LogWebsocketClient extends WebSocketClient {
      */
     @Override
     public void onOpen(ServerHandshake handshakedata) {
-        if(needsReconnected) {
-            // We're just back from a reconnection, nothing much to do
-            Output.print("Reconnected.");
-            return;
+        if(!needsReconnected) {
+            Output.print("Connected to websocket. Attempting authentication...");
+        } else {
+            Output.print("Reconnected. Reauthenticating...");
         }
 
-        Output.print("Connected to websocket. Attempting authentication...");
         Gson gson = new Gson();
 
         // Not sure if this or hard coding with concat it is better practice, easy change if i decide against one tho
@@ -69,16 +70,32 @@ public class LogWebsocketClient extends WebSocketClient {
         }
 
         Output.print("Authenticated.");
-        Output.print("Good to go!");
 
-        HashMap<String, String> archiveValues = new HashMap<>();
-        archiveValues.put("type", "archive");
-        send(gson.toJson(archiveValues));
+        if(needsReconnected) {
+            if(reconnectionQueue != null) {
+                if(!reconnectionQueue.isEmpty()) {
+                    Output.print("Clearing log queue from reconnection.");
+                    for(String data : reconnectionQueue) {
+                        send(data);
+                    }
+                }
 
-        // Start Log
-        new Log("System")
-                .addFragment("Server started.")
-                .send();
+                reconnectionQueue = null;
+            }
+
+            needsReconnected = false;
+        } else {
+            Output.print("Good to go!");
+
+            HashMap<String, String> archiveValues = new HashMap<>();
+            archiveValues.put("type", "archive");
+            send(gson.toJson(archiveValues));
+
+            // Start Log
+            new Log("System")
+                    .addFragment("Server started.")
+                    .send();
+        }
     }
 
     /**
@@ -96,6 +113,7 @@ public class LogWebsocketClient extends WebSocketClient {
         }
         Output.print("Lost connection to websocket.");
         Output.print("Waiting until next message before reconnecting...");
+        needsReconnected = true;
     }
 
     /**
