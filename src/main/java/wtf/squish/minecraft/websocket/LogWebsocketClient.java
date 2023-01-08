@@ -111,6 +111,10 @@ public class LogWebsocketClient extends WebSocketClient {
         ex.printStackTrace();
     }
 
+    /**
+     * Runs when the websocket needs to send data, overridden so reconnection logic can be put here.
+     * @param text The string which will be transmitted.
+     */
     @Override
     public void send(String text) {
         if(this.getConnection().isClosed()) {

@@ -15,15 +15,27 @@ public class Log {
     private String category;
     private ArrayList<Fragment> fragments = new ArrayList<>();
 
+    /**
+     * Creates a new log.
+     * @param category The category for this log.
+     */
     public Log(String category) {
         this.category = category;
     }
 
+    /**
+     * Adds a new fragment to the log.
+     * @param fragment The fragment to add.
+     * @return The log object.
+     */
     public Log addFragment(Fragment fragment) {
         this.fragments.add(fragment);
         return this;
     }
 
+    /**
+     * Sends the log to the server.
+     */
     public void send() {
         Gson gson = new Gson();
         HashMap<String, Object> values = new HashMap<>();
@@ -35,6 +47,7 @@ public class Log {
         SquishLogs.getWebSocket().send(log);
     }
 
+    // getters/setters
     public String getCategory() {return category;}
     public void setCategory(String category) {this.category = category;}
 

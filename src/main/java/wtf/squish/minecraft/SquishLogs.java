@@ -132,6 +132,10 @@ public class SquishLogs extends JavaPlugin {
      */
     public static ServerInformation getServerInfo() {return serverInfo;}
 
+    /**
+     * Registers a player on the api.
+     * @param player The player to register.
+     */
     public static void registerPlayer(Player player) {
         Gson gson = new Gson();
         HashMap<String, Object> playerInfo = new HashMap<String, Object>();
