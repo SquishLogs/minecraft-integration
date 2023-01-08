@@ -5,6 +5,8 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.framing.CloseFrame;
 import org.java_websocket.handshake.ServerHandshake;
 import wtf.squish.minecraft.SquishLogs;
+import wtf.squish.minecraft.entities.Fragment;
+import wtf.squish.minecraft.entities.Log;
 import wtf.squish.minecraft.util.Output;
 
 import java.net.URI;
@@ -43,6 +45,11 @@ public class LogWebsocketClient extends WebSocketClient {
         HashMap<String, String> archiveValues = new HashMap<>();
         archiveValues.put("type", "archive");
         send(gson.toJson(archiveValues));
+
+        // Start Log
+        new Log("System")
+                .addFragment(new Fragment("Server started.", null))
+                .send();
     }
 
     /**
@@ -63,6 +70,7 @@ public class LogWebsocketClient extends WebSocketClient {
     @Override
     public void onClose(int code, String reason, boolean remote) {
         Output.print("Lost connection to websocket.");
+
     }
 
     /**
