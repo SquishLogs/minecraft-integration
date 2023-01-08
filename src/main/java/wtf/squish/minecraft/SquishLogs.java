@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import wtf.squish.minecraft.entities.ServerInformation;
-import wtf.squish.minecraft.listeners.ChatListeners;
+import wtf.squish.minecraft.loggers.PlayerLogger;
 import wtf.squish.minecraft.util.Output;
 import wtf.squish.minecraft.websocket.LogWebsocketClient;
 
@@ -40,7 +40,7 @@ public class SquishLogs extends JavaPlugin {
         this.saveDefaultConfig();
 
         // Register our listeners
-        getServer().getPluginManager().registerEvents(new ChatListeners(), this);
+        getServer().getPluginManager().registerEvents(new PlayerLogger(), this);
 
         // Fetch the websocket info
         boolean gotInformation = getWebsocketInfo();
@@ -116,6 +116,13 @@ public class SquishLogs extends JavaPlugin {
         webSocketClient.connect();
     }
 
+    /**
+     * Gets the current websocket client.
+     * @return The websocket client.
+     */
+    public static LogWebsocketClient getWebSocket() {
+        return webSocketClient;
+    }
 
     /**
      * Gets the current server's information, fetched from the API.
