@@ -113,8 +113,8 @@ public class LogWebsocketClient extends WebSocketClient {
 
     @Override
     public void send(String text) {
-        if(stayClosed) return;
         if(this.getConnection().isClosed()) {
+            if(stayClosed) return;
             Output.print("Attempting to reconnect...");
             this.reconnect();
         }
