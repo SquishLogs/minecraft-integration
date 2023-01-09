@@ -71,28 +71,6 @@ public class PlayerLogger implements Listener {
     }
 
     /**
-     * Logs the player dying, or being killed.
-     * @param event The event.
-     */
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
-        Player killer = event.getEntity().getKiller();
-        if(killer != null) {
-            new Log("Player | Death")
-                    .addFragment(event.getEntity().getPlayer())
-                    .addFragment(" was killed by ")
-                    .addFragment(event.getEntity().getKiller())
-                    .addFragment(".")
-                    .send();
-        } else {
-            new Log("Player | Death")
-                    .addFragment(event.getEntity().getPlayer())
-                    .addFragment(" died.")
-                    .send();
-        }
-    }
-
-    /**
      * Logs the player teleporting.
      * @param event The event.
      */
