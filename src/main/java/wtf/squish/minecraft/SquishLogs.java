@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import wtf.squish.minecraft.entities.Log;
 import wtf.squish.minecraft.entities.ServerInformation;
 import wtf.squish.minecraft.loggers.PlayerLogger;
 import wtf.squish.minecraft.util.Output;
@@ -63,6 +64,12 @@ public class SquishLogs extends JavaPlugin {
         Output.print("  Server/Socket Region: " + serverInfo.getRegionID() + " / " + serverInfo.getSocket().getContinent());
         Output.print("Attempting to connect to websocket...");
         connectToWebsocket();
+    }
+
+    public void onDisable() {
+        new Log("System")
+                .addFragment("Server stopped.")
+                .send();
     }
 
     /**

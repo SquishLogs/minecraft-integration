@@ -1,19 +1,15 @@
 package wtf.squish.minecraft.loggers;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.*;
 import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.Log;
 
-import java.awt.*;
-
 /**
  * Logger for player actions.
- * - Joining
- * - Leaving
  * @author Livaco
  */
 public class PlayerLogger implements Listener {
@@ -54,6 +50,74 @@ public class PlayerLogger implements Listener {
                 .addFragment(event.getPlayer())
                 .addFragment(" said in chat ")
                 .addFragment(event.getMessage(), SquishLogs.getLogColor())
+                .addFragment(".")
+                .send();
+    }
+
+    /**
+     * Logs the player running commands.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
+        if(event.isCancelled()) return;
+
+        new Log("Player | Command")
+                .addFragment(event.getPlayer())
+                .addFragment(" ran command ")
+                .addFragment(event.getMessage(), SquishLogs.getLogColor())
+                .addFragment(".")
+                .send();
+    }
+
+    /**
+     * Logs the player dying, or being killed.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        Player killer = event.getEntity().getKiller();
+        if(killer != null) {
+            new Log("Player | Death")
+                    .addFragment(event.getEntity().getPlayer())
+                    .addFragment(" was killed by ")
+                    .addFragment(event.getEntity().getKiller())
+                    .addFragment(".")
+                    .send();
+        } else {
+            new Log("Player | Death")
+                    .addFragment(event.getEntity().getPlayer())
+                    .addFragment(" died.")
+                    .send();
+        }
+    }
+
+    /**
+     * Logs the player teleporting.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onPlayerTeleport(PlayerTeleportEvent event) {
+        new Log("Player | Teleport")
+                .addFragment(event.getPlayer())
+                .addFragment(" teleported from ")
+                .addFragment(event.getFrom().toString(), SquishLogs.getLogColor())
+                .addFragment(" to ")
+                .addFragment(event.getTo().toString(), SquishLogs.getLogColor())
+                .addFragment(".")
+                .send();
+    }
+
+    /**
+     * Logs the player changing game mode changing.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onPlayerGameModeChange(PlayerGameModeChangeEvent event) {
+        new Log("Player | Gamemode")
+                .addFragment(event.getPlayer())
+                .addFragment(" set their gamemode to ")
+                .addFragment(event.getNewGameMode().name().toLowerCase(), SquishLogs.getLogColor())
                 .addFragment(".")
                 .send();
     }
