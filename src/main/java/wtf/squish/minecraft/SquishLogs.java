@@ -11,6 +11,7 @@ import wtf.squish.minecraft.loggers.PlayerLogger;
 import wtf.squish.minecraft.util.Output;
 import wtf.squish.minecraft.websocket.LogWebsocketClient;
 
+import java.awt.*;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -32,6 +33,7 @@ public class SquishLogs extends JavaPlugin {
             .connectTimeout(Duration.ofSeconds(10))
             .build();
     private static ServerInformation serverInfo;
+    private static Color logColor = new Color(29, 97, 129);
 
     @Override
     public void onEnable() {
@@ -132,6 +134,14 @@ public class SquishLogs extends JavaPlugin {
      */
     public static ServerInformation getServerInfo() {
         return serverInfo;
+    }
+
+    /**
+     * Returns the log color.
+     * @return The log color.
+     */
+    public static Color getLogColor() {
+        return logColor;
     }
 
     /**

@@ -53,7 +53,7 @@ public class PlayerLogger implements Listener {
         new Log("Player | Chat")
                 .addFragment(event.getPlayer())
                 .addFragment(" said in chat ")
-                .addFragment(event.getMessage(), Color.MAGENTA)
+                .addFragment(event.getMessage(), SquishLogs.getLogColor())
                 .addFragment(".")
                 .send();
     }
