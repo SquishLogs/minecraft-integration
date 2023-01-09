@@ -1,9 +1,12 @@
 package wtf.squish.minecraft.loggers;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.Log;
@@ -98,5 +101,33 @@ public class PlayerLogger implements Listener {
                 .addFragment(event.getNewGameMode().name().toLowerCase(), SquishLogs.getLogColor())
                 .addFragment(".")
                 .send();
+    }
+
+    /**
+     * Logs when the player trades with a villager.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        // I'm trusting you https://www.spigotmc.org/threads/is-there-an-aftertradeevent.507855/#post-4172939
+        if(event.getInventory().getType() != InventoryType.MERCHANT) return;
+        if(event.getSlot() != 2) return;
+        if(!(event.getWhoClicked() instanceof Player)) return;
+
+
+        Player player = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
+        if(event.getCurrentItem() != null) {
+            new Log("Player | Villager Trade")
+                    .addFragment(player)
+                    .addFragment(" traded with a villager to get a ")
+                    .addFragment(event.getCurrentItem().getType().name().toLowerCase(), SquishLogs.getLogColor())
+                    .addFragment(".")
+                    .send();
+        } else {
+            new Log("Player | Villager Trade")
+                    .addFragment(player)
+                    .addFragment(" traded with a villager to get an unknown item.")
+                    .send();
+        }
     }
 }
