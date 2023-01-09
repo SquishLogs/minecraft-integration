@@ -10,6 +10,7 @@ import wtf.squish.minecraft.entities.Log;
 import wtf.squish.minecraft.util.Output;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -137,7 +138,13 @@ public class LogWebsocketClient extends WebSocketClient {
         if(this.getConnection().isClosed()) {
             if(stayClosed) return;
             Output.print("Attempting to reconnect...");
+
+            if(this.reconnectionQueue == null) {
+                this.reconnectionQueue = new ArrayList<>();
+            }
+            this.reconnectionQueue.add(text);
             this.reconnect();
+            return;
         }
 
         super.send(text);
