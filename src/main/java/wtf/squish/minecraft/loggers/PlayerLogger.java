@@ -4,12 +4,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.Log;
+import wtf.squish.minecraft.util.Output;
 
 /**
  * Logger for player actions.
@@ -113,9 +116,8 @@ public class PlayerLogger implements Listener {
         if(event.getInventory().getType() != InventoryType.MERCHANT) return;
         if(event.getSlot() != 2) return;
         if(!(event.getWhoClicked() instanceof Player)) return;
-
-
         Player player = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
+
         if(event.getCurrentItem() != null) {
             new Log("Player | Villager Trade")
                     .addFragment(player)
@@ -129,5 +131,36 @@ public class PlayerLogger implements Listener {
                     .addFragment(" traded with a villager to get an unknown item.")
                     .send();
         }
+    }
+
+    /**
+     * Logs when the player crafts an item.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onCraftItem(CraftItemEvent event) {
+        if(!(event.getWhoClicked() instanceof Player)) return;
+        Player player = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
+
+        // Thank you https://www.spigotmc.org/threads/how-to-get-amount-of-item-crafted.377598/#post-3896072
+        ItemStack item = event.getRecipe().getResult();
+        int amount = item.getAmount();
+        if(event.getClick().isShiftClick()) {
+            int lowerAmount = item.getMaxStackSize() + 1000;
+            for(ItemStack actualItem : event.getInventory().getContents()) {
+                if(actualItem.getType().isAir() || lowerAmount <= actualItem.getAmount() || actualItem.getType().equals(item.getType())) continue;
+                lowerAmount = actualItem.getAmount();
+            }
+            amount = lowerAmount * item.getAmount();
+        }
+
+        new Log("Player | Craft")
+                .addFragment(player)
+                .addFragment(" crafted ")
+                .addFragment(amount, SquishLogs.getLogColor())
+                .addFragment(" of ")
+                .addFragment(event.getRecipe().getResult().getType().name().toLowerCase(), SquishLogs.getLogColor())
+                .addFragment(".")
+                .send();
     }
 }
