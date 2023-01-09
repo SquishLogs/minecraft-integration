@@ -124,6 +124,8 @@ public class LogWebsocketClient extends WebSocketClient {
     public void onError(Exception ex) {
         Output.print("Websocket produced this error:");
         ex.printStackTrace();
+        Output.print("Closing, so we can get a fresh connection.");
+        this.close();
     }
 
     /**
