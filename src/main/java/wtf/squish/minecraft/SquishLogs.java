@@ -130,7 +130,9 @@ public class SquishLogs extends JavaPlugin {
      * Gets the current server's information, fetched from the API.
      * @return The server info.
      */
-    public static ServerInformation getServerInfo() {return serverInfo;}
+    public static ServerInformation getServerInfo() {
+        return serverInfo;
+    }
 
     /**
      * Registers a player on the api.
