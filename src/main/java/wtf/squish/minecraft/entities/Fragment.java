@@ -42,7 +42,7 @@ public class Fragment {
      */
     public Fragment(String string, Color color) {
         this.type = FragmentType.TEXT;
-        this.data.put("text", " " + string + " "); // Pad it with spaces so it doesn't interfere with other fragments.
+        this.data.put("text", string);
         this.data.put("color", formatColor(color));
     }
 

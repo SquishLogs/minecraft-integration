@@ -28,7 +28,7 @@ public class PlayerLogger implements Listener {
         // Log them
         new Log("Player | Connect")
                 .addFragment(event.getPlayer())
-                .addFragment("joined the server.")
+                .addFragment(" joined the server.")
                 .send();
     }
 
@@ -40,7 +40,7 @@ public class PlayerLogger implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         new Log("Player | Disconnect")
                 .addFragment(event.getPlayer())
-                .addFragment("left the server.")
+                .addFragment(" left the server.")
                 .send();
     }
 
@@ -52,7 +52,7 @@ public class PlayerLogger implements Listener {
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         new Log("Player | Chat")
                 .addFragment(event.getPlayer())
-                .addFragment("said in chat")
+                .addFragment(" said in chat ")
                 .addFragment(event.getMessage(), Color.MAGENTA)
                 .addFragment(".")
                 .send();
