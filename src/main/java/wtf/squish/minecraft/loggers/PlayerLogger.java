@@ -1,9 +1,11 @@
 package wtf.squish.minecraft.loggers;
 
 import org.bukkit.Bukkit;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -13,6 +15,8 @@ import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.Log;
 import wtf.squish.minecraft.util.Output;
+
+import java.util.Map;
 
 /**
  * Logger for player actions.
@@ -160,6 +164,30 @@ public class PlayerLogger implements Listener {
                 .addFragment(amount, SquishLogs.getLogColor())
                 .addFragment(" of ")
                 .addFragment(event.getRecipe().getResult().getType().name().toLowerCase(), SquishLogs.getLogColor())
+                .addFragment(".")
+                .send();
+    }
+
+    @EventHandler
+    public void onEnchantItem(EnchantItemEvent event) {
+        Map<Enchantment, Integer> enchantsToAdd = event.getEnchantsToAdd();
+        StringBuilder builder = new StringBuilder();
+        int i = 0;
+        for(Map.Entry<Enchantment, Integer> entry : enchantsToAdd.entrySet()) {
+            builder.append(entry.getKey().getKey().getKey()); // excellent naming there spigot
+            if(i >= 0 && i < (enchantsToAdd.size() - 1)) {
+                 builder.append(", ");
+            }
+            i++;
+        }
+        String enchantments = builder.toString();
+
+        new Log("Player | Enchant")
+                .addFragment(event.getEnchanter())
+                .addFragment(" enchanted their ")
+                .addFragment(event.getItem().getType().name().toLowerCase(), SquishLogs.getLogColor())
+                .addFragment(" with ")
+                .addFragment(enchantments, SquishLogs.getLogColor())
                 .addFragment(".")
                 .send();
     }
