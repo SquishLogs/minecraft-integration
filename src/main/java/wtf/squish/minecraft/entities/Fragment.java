@@ -1,5 +1,6 @@
 package wtf.squish.minecraft.entities;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import wtf.squish.minecraft.enums.FragmentType;
 
@@ -53,6 +54,15 @@ public class Fragment {
      */
     public Fragment(int number, Color color) {
         this(String.valueOf(number), color);
+    }
+
+    /**
+     * Creates a location fragment. This gets converted to a text fragment internally.
+     * @param location The location.
+     * @param color The color.
+     */
+    public Fragment(Location location, Color color) {
+        this(location.getBlockX() + ", " + location.getBlockY() + ", " + location.getBlockZ(), color);
     }
 
     // get/set

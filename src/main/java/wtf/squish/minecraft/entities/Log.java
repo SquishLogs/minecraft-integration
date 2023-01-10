@@ -1,6 +1,7 @@
 package wtf.squish.minecraft.entities;
 
 import com.google.gson.Gson;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import wtf.squish.minecraft.SquishLogs;
 
@@ -79,6 +80,25 @@ public class Log {
      */
     public Log addFragment(int number) {
         return this.addFragment(new Fragment(number, null));
+    }
+
+    /**
+     * Adds a location fragment.
+     * @param location The location.
+     * @param color The color.
+     * @return The log object.
+     */
+    public Log addFragment(Location location, Color color) {
+        return this.addFragment(new Fragment(location, color));
+    }
+
+    /**
+     * Adds a location fragment.
+     * @param location The location.
+     * @return The log object.
+     */
+    public Log addFragment(Location location) {
+        return this.addFragment(new Fragment(location, null));
     }
 
     /**

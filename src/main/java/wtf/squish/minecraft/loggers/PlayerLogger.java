@@ -89,9 +89,9 @@ public class PlayerLogger implements Listener {
         new Log("Player | Teleport")
                 .addFragment(event.getPlayer())
                 .addFragment(" teleported from ")
-                .addFragment(event.getFrom().toString(), SquishLogs.getLogColor())
+                .addFragment(event.getFrom(), SquishLogs.getLogColor())
                 .addFragment(" to ")
-                .addFragment(event.getTo().toString(), SquishLogs.getLogColor())
+                .addFragment(event.getTo(), SquishLogs.getLogColor())
                 .addFragment(".")
                 .send();
     }
