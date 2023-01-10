@@ -21,7 +21,7 @@ public class SystemLogger implements Listener {
 
         new Log("System")
                 .addFragment("Server ran command ")
-                .addFragment(event.getCommand(), SquishLogs.getLogColor())
+                .addFragment(event.getCommand(), true)
                 .addFragment(".")
                 .send();
     }

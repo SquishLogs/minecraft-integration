@@ -57,7 +57,7 @@ public class PlayerLogger implements Listener {
         new Log("Player | Chat")
                 .addFragment(event.getPlayer())
                 .addFragment(" said in chat ")
-                .addFragment(event.getMessage(), SquishLogs.getLogColor())
+                .addFragment(event.getMessage(), true)
                 .addFragment(".")
                 .send();
     }
@@ -73,7 +73,7 @@ public class PlayerLogger implements Listener {
         new Log("Player | Command")
                 .addFragment(event.getPlayer())
                 .addFragment(" ran command ")
-                .addFragment(event.getMessage(), SquishLogs.getLogColor())
+                .addFragment(event.getMessage(), true)
                 .addFragment(".")
                 .send();
     }
@@ -87,9 +87,9 @@ public class PlayerLogger implements Listener {
         new Log("Player | Teleport")
                 .addFragment(event.getPlayer())
                 .addFragment(" teleported from ")
-                .addFragment(event.getFrom(), SquishLogs.getLogColor())
+                .addFragment(event.getFrom(), true)
                 .addFragment(" to ")
-                .addFragment(event.getTo(), SquishLogs.getLogColor())
+                .addFragment(event.getTo(), true)
                 .addFragment(".")
                 .send();
     }
@@ -103,7 +103,7 @@ public class PlayerLogger implements Listener {
         new Log("Player | Gamemode")
                 .addFragment(event.getPlayer())
                 .addFragment(" set their gamemode to ")
-                .addFragment(event.getNewGameMode().name().toLowerCase(), SquishLogs.getLogColor())
+                .addFragment(event.getNewGameMode().name().toLowerCase(), true)
                 .addFragment(".")
                 .send();
     }
@@ -124,7 +124,7 @@ public class PlayerLogger implements Listener {
             new Log("Player | Villager Trade")
                     .addFragment(player)
                     .addFragment(" traded with a villager to get a ")
-                    .addFragment(event.getCurrentItem().getType().name().toLowerCase(), SquishLogs.getLogColor())
+                    .addFragment(event.getCurrentItem().getType().name().toLowerCase(), true)
                     .addFragment(".")
                     .send();
         } else {
@@ -159,9 +159,9 @@ public class PlayerLogger implements Listener {
         new Log("Player | Craft")
                 .addFragment(player)
                 .addFragment(" crafted ")
-                .addFragment(amount, SquishLogs.getLogColor())
+                .addFragment(amount, true)
                 .addFragment(" of ")
-                .addFragment(event.getRecipe().getResult().getType().name().toLowerCase(), SquishLogs.getLogColor())
+                .addFragment(event.getRecipe().getResult().getType().name().toLowerCase(), true)
                 .addFragment(".")
                 .send();
     }
@@ -187,9 +187,9 @@ public class PlayerLogger implements Listener {
         new Log("Player | Enchant")
                 .addFragment(event.getEnchanter())
                 .addFragment(" enchanted their ")
-                .addFragment(event.getItem().getType().name().toLowerCase(), SquishLogs.getLogColor())
+                .addFragment(event.getItem().getType().name().toLowerCase(), true)
                 .addFragment(" with ")
-                .addFragment(enchantments, SquishLogs.getLogColor())
+                .addFragment(enchantments, true)
                 .addFragment(".")
                 .send();
     }
@@ -204,7 +204,7 @@ public class PlayerLogger implements Listener {
         new Log("Player | Advancement")
                 .addFragment(event.getPlayer())
                 .addFragment(" earned the advancement ")
-                .addFragment(event.getAdvancement().getDisplay().getTitle(), SquishLogs.getLogColor())
+                .addFragment(event.getAdvancement().getDisplay().getTitle(), true)
                 .addFragment(".")
                 .send();
     }

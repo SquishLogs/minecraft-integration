@@ -7,7 +7,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.Log;
 
 import java.util.HashMap;
@@ -52,9 +51,9 @@ public class CombatLogger implements Listener {
         new Log("Combat | Entity Death")
                 .addFragment(event.getEntity().getKiller())
                 .addFragment(" killed a ")
-                .addFragment(event.getEntity().getType().name().toLowerCase(), SquishLogs.getLogColor())
+                .addFragment(event.getEntity().getType().name().toLowerCase(), true)
                 .addFragment(" with a ")
-                .addFragment(event.getEntity().getKiller().getInventory().getItemInMainHand().getType().name().toLowerCase(), SquishLogs.getLogColor())
+                .addFragment(event.getEntity().getKiller().getInventory().getItemInMainHand().getType().name().toLowerCase(), true)
                 .addFragment(".")
                 .send();
     }
@@ -89,7 +88,7 @@ public class CombatLogger implements Listener {
                 .addFragment(" killed ")
                 .addFragment(player)
                 .addFragment(" with a ")
-                .addFragment(killer.getInventory().getItemInMainHand().getType().name().toLowerCase(), SquishLogs.getLogColor())
+                .addFragment(killer.getInventory().getItemInMainHand().getType().name().toLowerCase(), true)
                 .addFragment(".")
                 .send();
     }
@@ -109,7 +108,7 @@ public class CombatLogger implements Listener {
         new Log("Combat | PvP")
                 .addFragment(player)
                 .addFragment(" was killed by a ")
-                .addFragment(event.getDamager().getName(), SquishLogs.getLogColor())
+                .addFragment(event.getDamager().getName(), true)
                 .addFragment(".")
                 .send();
     }

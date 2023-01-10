@@ -55,6 +55,16 @@ public class Log {
     }
 
     /**
+     * Adds a text fragment with a highlight.
+     * @param string The text.
+     * @param highlight If to highlight the text or not.
+     * @return The log object.
+     */
+    public Log addFragment(String string, boolean highlight) {
+        return this.addFragment(new Fragment(string, (highlight ? SquishLogs.getLogColor() : null)));
+    }
+
+    /**
      * Adds a text fragment.
      * @param string The text.
      * @return The log object.
@@ -74,6 +84,16 @@ public class Log {
     }
 
     /**
+     * Adds a number fragment with a highlight.
+     * @param number The number.
+     * @param highlight If to highlight the text or not.
+     * @return The log object.
+     */
+    public Log addFragment(int number, boolean highlight) {
+        return this.addFragment(new Fragment(number, (highlight ? SquishLogs.getLogColor() : null)));
+    }
+
+    /**
      * Adds a number fragment.
      * @param number The number.
      * @return The log object.
@@ -83,13 +103,23 @@ public class Log {
     }
 
     /**
-     * Adds a location fragment.
+     * Adds a location fragment with a color.
      * @param location The location.
      * @param color The color.
      * @return The log object.
      */
     public Log addFragment(Location location, Color color) {
         return this.addFragment(new Fragment(location, color));
+    }
+
+    /**
+     * Adds a number fragment with a highlight.
+     * @param location The location.
+     * @param highlight If to highlight the text or not.
+     * @return The log object.
+     */
+    public Log addFragment(Location location, boolean highlight) {
+        return this.addFragment(new Fragment(location, (highlight ? SquishLogs.getLogColor() : null)));
     }
 
     /**
