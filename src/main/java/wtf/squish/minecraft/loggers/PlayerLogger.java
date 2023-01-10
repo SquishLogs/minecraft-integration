@@ -54,6 +54,8 @@ public class PlayerLogger implements Listener {
      */
     @EventHandler
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
+        if(event.isCancelled()) return;
+
         new Log("Player | Chat")
                 .addFragment(event.getPlayer())
                 .addFragment(" said in chat ")
@@ -84,7 +86,9 @@ public class PlayerLogger implements Listener {
      */
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event) {
+        if(event.isCancelled()) return;
         if(event.getCause() != PlayerTeleportEvent.TeleportCause.COMMAND) return;
+
         new Log("Player | Teleport")
                 .addFragment(event.getPlayer())
                 .addFragment(" teleported from ")
@@ -101,6 +105,8 @@ public class PlayerLogger implements Listener {
      */
     @EventHandler
     public void onPlayerGameModeChange(PlayerGameModeChangeEvent event) {
+        if(event.isCancelled()) return;
+
         new Log("Player | Gamemode")
                 .addFragment(event.getPlayer())
                 .addFragment(" set their gamemode to ")
@@ -115,6 +121,7 @@ public class PlayerLogger implements Listener {
      */
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
+        if(event.isCancelled()) return;
         // I'm trusting you https://www.spigotmc.org/threads/is-there-an-aftertradeevent.507855/#post-4172939
         if(event.getInventory().getType() != InventoryType.MERCHANT) return;
         if(event.getSlot() != 2) return;
@@ -142,6 +149,7 @@ public class PlayerLogger implements Listener {
      */
     @EventHandler
     public void onCraftItem(CraftItemEvent event) {
+        if(event.isCancelled()) return;
         if(!(event.getWhoClicked() instanceof Player)) return;
         Player player = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
 
@@ -173,6 +181,7 @@ public class PlayerLogger implements Listener {
      */
     @EventHandler
     public void onEnchantItem(EnchantItemEvent event) {
+        if(event.isCancelled()) return;
         Map<Enchantment, Integer> enchantsToAdd = event.getEnchantsToAdd();
         StringBuilder builder = new StringBuilder();
         int i = 0;

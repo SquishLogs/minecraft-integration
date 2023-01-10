@@ -25,6 +25,8 @@ public class WorldLogger implements Listener {
      */
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
+        if(event.isCancelled()) return;
+
         new Log("World | Dropped Item")
                 .addFragment(event.getPlayer())
                 .addFragment(" dropped ")
@@ -43,6 +45,8 @@ public class WorldLogger implements Listener {
      */
     @EventHandler
     public void onRaidTriggerEvent(RaidTriggerEvent event) {
+        if(event.isCancelled()) return;
+
         new Log("World | Raid Started")
                 .addFragment(event.getPlayer())
                 .addFragment(" triggered a raid at ")
@@ -83,6 +87,8 @@ public class WorldLogger implements Listener {
      */
     @EventHandler
     public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
+        if(event.isCancelled()) return;
+
         ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
         if(item.getType() != Material.NAME_TAG) return;
         if(item.getItemMeta() == null) return;
