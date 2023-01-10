@@ -3,16 +3,15 @@ package wtf.squish.minecraft.loggers;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDropItemEvent;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.raid.RaidFinishEvent;
-import org.bukkit.event.raid.RaidSpawnWaveEvent;
 import org.bukkit.event.raid.RaidStopEvent;
 import org.bukkit.event.raid.RaidTriggerEvent;
 import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.entities.Log;
-import wtf.squish.minecraft.util.Output;
 
 /**
  * Logs events that happen in general around the world.
@@ -104,6 +103,23 @@ public class WorldLogger implements Listener {
                 .addFragment(name, true)
                 .addFragment(" to ")
                 .addFragment(item.getItemMeta().getDisplayName(), true)
+                .send();
+    }
+
+    /**
+     * Logs when a player starts a fire.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if(event.getMaterial() != Material.FLINT_AND_STEEL) return;
+        if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if(event.getClickedBlock() == null) return;
+
+        new Log("World | Fire Started")
+                .addFragment(event.getPlayer())
+                .addFragment(" lit a fire at ")
+                .addFragment(event.getClickedBlock().getLocation(), true)
                 .send();
     }
 }
