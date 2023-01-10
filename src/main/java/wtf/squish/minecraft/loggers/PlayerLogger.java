@@ -10,11 +10,9 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.Log;
-import wtf.squish.minecraft.util.Output;
 
 import java.util.Map;
 
@@ -196,6 +194,10 @@ public class PlayerLogger implements Listener {
                 .send();
     }
 
+    /**
+     * Logs when a player earns an advancement.
+     * @param event The event.
+     */
     @EventHandler
     public void onPlayerAdvancementDone(PlayerAdvancementDoneEvent event) {
         if(event.getAdvancement().getDisplay() == null) return;

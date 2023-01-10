@@ -11,6 +11,10 @@ import wtf.squish.minecraft.entities.Log;
  * @author Livaco
  */
 public class SystemLogger implements Listener {
+    /**
+     * Logs when the console runs a command.
+     * @param event The event.
+     */
     @EventHandler
     public void onServerCommand(ServerCommandEvent event) {
         if(event.isCancelled()) return;

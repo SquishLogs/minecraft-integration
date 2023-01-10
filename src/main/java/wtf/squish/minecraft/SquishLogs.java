@@ -36,7 +36,7 @@ public class SquishLogs extends JavaPlugin {
             .connectTimeout(Duration.ofSeconds(10))
             .build();
     private static ServerInformation serverInfo;
-    private static Color logColor = new Color(29, 97, 129);
+    private static final Color logColor = new Color(29, 97, 129);
 
     @Override
     public void onEnable() {
@@ -161,7 +161,7 @@ public class SquishLogs extends JavaPlugin {
      */
     public static void registerPlayer(Player player) {
         Gson gson = new Gson();
-        HashMap<String, Object> playerInfo = new HashMap<String, Object>();
+        HashMap<String, Object> playerInfo = new HashMap<>();
         playerInfo.put("name", player.getName());
         playerInfo.put("platform_id", player.getUniqueId().toString());
         HashMap<String, Object> values = new HashMap<>();
