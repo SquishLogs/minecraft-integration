@@ -33,6 +33,10 @@ public class CombatLogger implements Listener {
                 .send();
     }
 
+    /**
+     * Logs player deaths.
+     * @param event The event.
+     */
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
