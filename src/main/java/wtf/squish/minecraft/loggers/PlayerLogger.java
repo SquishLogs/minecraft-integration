@@ -84,6 +84,7 @@ public class PlayerLogger implements Listener {
      */
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event) {
+        if(event.getCause() != PlayerTeleportEvent.TeleportCause.COMMAND) return;
         new Log("Player | Teleport")
                 .addFragment(event.getPlayer())
                 .addFragment(" teleported from ")
