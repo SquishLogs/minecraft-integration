@@ -168,6 +168,10 @@ public class PlayerLogger implements Listener {
                 .send();
     }
 
+    /**
+     * Logs when the player enchants an item.
+     * @param event The event.
+     */
     @EventHandler
     public void onEnchantItem(EnchantItemEvent event) {
         Map<Enchantment, Integer> enchantsToAdd = event.getEnchantsToAdd();
