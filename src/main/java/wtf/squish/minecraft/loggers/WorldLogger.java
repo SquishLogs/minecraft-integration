@@ -1,13 +1,16 @@
 package wtf.squish.minecraft.loggers;
 
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.raid.RaidFinishEvent;
 import org.bukkit.event.raid.RaidSpawnWaveEvent;
 import org.bukkit.event.raid.RaidStopEvent;
 import org.bukkit.event.raid.RaidTriggerEvent;
+import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.entities.Log;
 import wtf.squish.minecraft.util.Output;
 
@@ -71,6 +74,30 @@ public class WorldLogger implements Listener {
                 .addFragment("Raid at ")
                 .addFragment(event.getRaid().getLocation(), true)
                 .addFragment(" was stopped.")
+                .send();
+    }
+
+    /**
+     * Logs when an entity is renamed.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
+        ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
+        if(item.getType() != Material.NAME_TAG) return;
+        if(item.getItemMeta() == null) return;
+
+        String name = event.getRightClicked().getCustomName();
+        if(name == null) {
+            name = event.getRightClicked().getName();
+        }
+
+        new Log("World | Mob Renamed")
+                .addFragment(event.getPlayer())
+                .addFragment(" renamed ")
+                .addFragment(name, true)
+                .addFragment(" to ")
+                .addFragment(item.getItemMeta().getDisplayName(), true)
                 .send();
     }
 }
