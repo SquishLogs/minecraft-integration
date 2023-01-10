@@ -45,7 +45,7 @@ public class LogWebsocketClient extends WebSocketClient {
 
         Gson gson = new Gson();
 
-        // Not sure if this or hard coding with concat it is better practice, easy change if i decide against one tho
+        // Not sure if this or hard coding with concat it is better practice, easy change if I decide against one tho
         HashMap<String, String> authValues = new HashMap<>();
         authValues.put("type", "auth");
         authValues.put("community", SquishLogs.getConfigInstance().getString("community"));
