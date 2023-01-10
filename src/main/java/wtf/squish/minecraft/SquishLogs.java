@@ -46,6 +46,7 @@ public class SquishLogs extends JavaPlugin {
 
         // Register our listeners
         getServer().getPluginManager().registerEvents(new PlayerLogger(), this);
+        getServer().getPluginManager().registerEvents(new SystemLogger(), this);
 
         // Fetch the websocket info
         boolean gotInformation = getWebsocketInfo();
