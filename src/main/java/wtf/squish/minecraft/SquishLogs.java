@@ -3,6 +3,7 @@ package wtf.squish.minecraft;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,6 +12,7 @@ import wtf.squish.minecraft.entities.ServerInformation;
 import wtf.squish.minecraft.loggers.PlayerLogger;
 import wtf.squish.minecraft.loggers.SystemLogger;
 import wtf.squish.minecraft.loggers.CombatLogger;
+import wtf.squish.minecraft.loggers.WorldLogger;
 import wtf.squish.minecraft.util.Output;
 import wtf.squish.minecraft.websocket.LogWebsocketClient;
 
@@ -50,6 +52,7 @@ public class SquishLogs extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerLogger(), this);
         getServer().getPluginManager().registerEvents(new SystemLogger(), this);
         getServer().getPluginManager().registerEvents(new CombatLogger(), this);
+        getServer().getPluginManager().registerEvents(new WorldLogger(), this);
 
         // Fetch the websocket info
         boolean gotInformation = getWebsocketInfo();
