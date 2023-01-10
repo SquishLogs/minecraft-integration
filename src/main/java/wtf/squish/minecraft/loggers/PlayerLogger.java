@@ -195,4 +195,15 @@ public class PlayerLogger implements Listener {
                 .addFragment(".")
                 .send();
     }
+
+    @EventHandler
+    public void onPlayerAdvancementDone(PlayerAdvancementDoneEvent event) {
+        if(event.getAdvancement().getDisplay() == null) return;
+        new Log("Player | Advancement")
+                .addFragment(event.getPlayer())
+                .addFragment(" earned the advancement ")
+                .addFragment(event.getAdvancement().getDisplay().getTitle(), SquishLogs.getLogColor())
+                .addFragment(".")
+                .send();
+    }
 }
