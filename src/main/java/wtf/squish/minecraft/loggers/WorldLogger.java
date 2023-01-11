@@ -2,10 +2,12 @@ package wtf.squish.minecraft.loggers;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.raid.RaidFinishEvent;
@@ -120,5 +122,28 @@ public class WorldLogger implements Listener {
                 .addFragment(" lit a fire at ")
                 .addFragment(event.getBlockPlaced().getLocation(), true)
                 .send();
+    }
+
+    /**
+     * Logs when a boss spawns.
+     * @param event The event.
+     */
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+        if(event.isCancelled()) return;
+
+        if(event.getEntityType() == EntityType.WITHER) {
+            new Log("World | Wither Boss")
+                    .addFragment("A wither spawned at ")
+                    .addFragment(event.getLocation(), true)
+                    .send();
+            return;
+        }
+        if(event.getEntityType() == EntityType.ENDER_DRAGON) {
+            new Log("World | Ender Dragon Boss")
+                    .addFragment("An ender dragon spawned at ")
+                    .addFragment(event.getLocation(), true)
+                    .send();
+            return;
+        }
     }
 }
