@@ -143,7 +143,6 @@ public class WorldLogger implements Listener {
                     .addFragment("An ender dragon spawned at ")
                     .addFragment(event.getLocation(), true)
                     .send();
-            return;
         }
     }
 }
