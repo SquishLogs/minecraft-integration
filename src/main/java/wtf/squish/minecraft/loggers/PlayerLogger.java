@@ -1,19 +1,28 @@
 package wtf.squish.minecraft.loggers;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.Potion;
 import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.Log;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +30,8 @@ import java.util.Map;
  * @author Livaco
  */
 public class PlayerLogger implements Listener {
+    private List<Player> playersThatCleared; // You could've prevented this Spigot...
+
     /**
      * Logs the player joining the server, as well as calls for them to be registered.
      * @param event The event.
@@ -217,5 +228,57 @@ public class PlayerLogger implements Listener {
                 .addFragment(event.getAdvancement().getDisplay().getTitle(), true)
                 .addFragment(".")
                 .send();
+    }
+
+    /**
+     * Logs when a player gets effects modified to them. You are not allowed to judge my implementation on this.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onEntityPotionEffectEvent(EntityPotionEffectEvent event) {
+        if(event.isCancelled()) return;
+        if(!(event.getEntity() instanceof Player player)) return;
+
+        switch(event.getAction()) {
+            case ADDED, CHANGED -> {
+                if(event.getNewEffect() == null) return;
+                new Log("Player | Potion")
+                        .addFragment(player)
+                        .addFragment(" was given the effect of ")
+                        .addFragment(event.getNewEffect().getType().getName(), true)
+                        .addFragment(".")
+                        .send();
+            }
+            case CLEARED -> {
+                // Spigot calls this for EVERY SINGLE POTION THAT GOT CLEARED
+                // So, this is what I did...
+                if(playersThatCleared != null) {
+                    if(playersThatCleared.contains(player)) return;
+                } else {
+                    playersThatCleared = new ArrayList<>();
+                }
+                playersThatCleared.add(player);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(SquishLogs.getInstance(), () -> {
+                    playersThatCleared.remove(player);
+                    if(playersThatCleared.size() <= 0) {
+                        playersThatCleared = null;
+                    }
+                }, 1);
+
+                new Log("Player | Potion")
+                        .addFragment(player)
+                        .addFragment(" had their effects cleared.")
+                        .send();
+            }
+            case REMOVED -> {
+                if(event.getOldEffect() == null) return;
+                new Log("Player | Potion")
+                        .addFragment(player)
+                        .addFragment(" had their ")
+                        .addFragment(event.getOldEffect().getType().getName(), true)
+                        .addFragment(" effect removed.")
+                        .send();
+            }
+        }
     }
 }

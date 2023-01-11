@@ -77,6 +77,12 @@ public class SquishLogs extends JavaPlugin {
         new Log("System")
                 .addFragment("Server stopped.")
                 .send();
+
+        instance = null;
+    }
+
+    public static SquishLogs getInstance() {
+        return instance;
     }
 
     /**
