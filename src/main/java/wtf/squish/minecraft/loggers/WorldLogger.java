@@ -128,19 +128,20 @@ public class WorldLogger implements Listener {
      * Logs when a boss spawns.
      * @param event The event.
      */
+    @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
         if(event.isCancelled()) return;
 
         if(event.getEntityType() == EntityType.WITHER) {
             new Log("World | Wither Boss")
-                    .addFragment("A wither spawned at ")
+                    .addFragment("A wither was spawned at ")
                     .addFragment(event.getLocation(), true)
                     .send();
             return;
         }
         if(event.getEntityType() == EntityType.ENDER_DRAGON) {
             new Log("World | Ender Dragon Boss")
-                    .addFragment("An ender dragon spawned at ")
+                    .addFragment("An ender dragon was spawned at ")
                     .addFragment(event.getLocation(), true)
                     .send();
         }
