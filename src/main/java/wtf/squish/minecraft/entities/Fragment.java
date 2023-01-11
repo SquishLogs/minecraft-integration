@@ -34,6 +34,7 @@ public class Fragment {
         this.data.put("platform_id", player.getUniqueId().toString());
         this.data.put("health", player.getHealth());
         this.data.put("hunger", player.getFoodLevel());
+        this.data.put("main_item", player.getInventory().getItemInMainHand().getType().name());
     }
 
     /**
