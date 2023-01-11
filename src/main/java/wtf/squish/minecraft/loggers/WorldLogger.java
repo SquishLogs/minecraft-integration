@@ -1,9 +1,11 @@
 package wtf.squish.minecraft.loggers;
 
 import org.bukkit.Material;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -111,15 +113,14 @@ public class WorldLogger implements Listener {
      * @param event The event.
      */
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        if(event.getMaterial() != Material.FLINT_AND_STEEL) return;
-        if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        if(event.getClickedBlock() == null) return;
+    public void onBlockPlace(BlockPlaceEvent event) {
+        if(event.isCancelled()) return;
+        if(event.getBlockPlaced().getType() != Material.FIRE) return;
 
         new Log("World | Fire Started")
                 .addFragment(event.getPlayer())
                 .addFragment(" lit a fire at ")
-                .addFragment(event.getClickedBlock().getLocation(), true)
+                .addFragment(event.getBlockPlaced().getLocation(), true)
                 .send();
     }
 }
