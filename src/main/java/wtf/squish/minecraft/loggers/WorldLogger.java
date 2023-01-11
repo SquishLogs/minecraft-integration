@@ -1,14 +1,13 @@
 package wtf.squish.minecraft.loggers;
 
 import org.bukkit.Material;
-import org.bukkit.event.Event;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.raid.RaidFinishEvent;
 import org.bukkit.event.raid.RaidStopEvent;
 import org.bukkit.event.raid.RaidTriggerEvent;
@@ -89,7 +88,6 @@ public class WorldLogger implements Listener {
     @EventHandler
     public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
         if(event.isCancelled()) return;
-
         ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
         if(item.getType() != Material.NAME_TAG) return;
         if(item.getItemMeta() == null) return;

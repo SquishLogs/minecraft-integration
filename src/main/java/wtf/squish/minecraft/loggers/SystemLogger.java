@@ -3,7 +3,6 @@ package wtf.squish.minecraft.loggers;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerCommandEvent;
-import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.Log;
 
 /**

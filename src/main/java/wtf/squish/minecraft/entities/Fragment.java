@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public class Fragment {
     private FragmentType type;
-    private HashMap<String, Object> data = new HashMap<>();
+    private final HashMap<String, Object> data = new HashMap<>();
 
     /**
      * Creates a fragment. This constructor requires you to manually add the data.

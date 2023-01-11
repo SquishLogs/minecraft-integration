@@ -106,6 +106,7 @@ public class LogWebsocketClient extends WebSocketClient {
      * @param remote Returns whether or not the closing of the connection was initiated by the remote
      *               host.
      */
+    @SuppressWarnings("GrazieInspection")
     @Override
     public void onClose(int code, String reason, boolean remote) {
         if(stayClosed) {

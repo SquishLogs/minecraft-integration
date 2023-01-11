@@ -1,27 +1,21 @@
 package wtf.squish.minecraft.loggers;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
-import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
 import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.Log;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -260,7 +254,7 @@ public class PlayerLogger implements Listener {
                 playersThatCleared.add(player);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(SquishLogs.getInstance(), () -> {
                     playersThatCleared.remove(player);
-                    if(playersThatCleared.size() <= 0) {
+                    if(playersThatCleared.size() == 0) {
                         playersThatCleared = null;
                     }
                 }, 1);
