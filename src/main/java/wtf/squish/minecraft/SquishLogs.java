@@ -48,10 +48,12 @@ public class SquishLogs extends JavaPlugin {
         this.saveDefaultConfig();
 
         // Register our listeners
+        // Register your custom loggers here!
         getServer().getPluginManager().registerEvents(new PlayerLogger(), this);
         getServer().getPluginManager().registerEvents(new SystemLogger(), this);
         getServer().getPluginManager().registerEvents(new CombatLogger(), this);
         getServer().getPluginManager().registerEvents(new WorldLogger(), this);
+        // Don't touch anything beyond here :)
 
         // Fetch the websocket info
         boolean gotInformation = getWebsocketInfo();
