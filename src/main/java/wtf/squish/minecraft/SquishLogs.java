@@ -8,10 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import wtf.squish.minecraft.entities.Log;
 import wtf.squish.minecraft.entities.ServerInformation;
-import wtf.squish.minecraft.loggers.PlayerLogger;
-import wtf.squish.minecraft.loggers.SystemLogger;
-import wtf.squish.minecraft.loggers.CombatLogger;
-import wtf.squish.minecraft.loggers.WorldLogger;
+import wtf.squish.minecraft.loggers.*;
 import wtf.squish.minecraft.util.Output;
 import wtf.squish.minecraft.websocket.LogWebsocketClient;
 
