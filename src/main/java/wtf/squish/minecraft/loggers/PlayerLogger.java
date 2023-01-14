@@ -7,10 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
-import org.bukkit.event.inventory.CraftItemEvent;
-import org.bukkit.event.inventory.FurnaceExtractEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.SquishLogs;
@@ -293,5 +290,42 @@ public class PlayerLogger implements Listener {
                         .send();
             }
         }
+    }
+
+    /**
+     * Logs when the player opens a chest.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onInventoryOpen(InventoryOpenEvent event) {
+        if(event.isCancelled()) return;
+        if(event.getInventory().getType() != InventoryType.CHEST) return;
+        if(!(event.getPlayer() instanceof Player)) return;
+        Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
+
+        new Log("Player | Chest Open")
+                .addFragment(player)
+                .addFragment(" opened a chest, located at ")
+                .addFragment(event.getInventory().getLocation())
+                .addFragment(".")
+                .send();
+    }
+
+    /**
+     * Logs when the player closes a chest.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        if(event.getInventory().getType() != InventoryType.CHEST) return;
+        if(!(event.getPlayer() instanceof Player)) return;
+        Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
+
+        new Log("Player | Chest Close")
+                .addFragment(player)
+                .addFragment(" closed a chest, located at ")
+                .addFragment(event.getInventory().getLocation())
+                .addFragment(".")
+                .send();
     }
 }
