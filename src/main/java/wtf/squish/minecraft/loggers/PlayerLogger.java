@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.FurnaceExtractEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
@@ -176,6 +177,24 @@ public class PlayerLogger implements Listener {
                 .addFragment(amount, true)
                 .addFragment(" of ")
                 .addFragment(event.getRecipe().getResult().getType().name().toLowerCase(), true)
+                .addFragment(".")
+                .send();
+    }
+
+    /**
+     * Logs when the player takes a smelted item.
+     * @param event The event.
+     */
+    @EventHandler
+    public void onFurnaceExtract(FurnaceExtractEvent event) {
+        new Log("Player | Smelt")
+                .addFragment(event.getPlayer())
+                .addFragment(" took out ")
+                .addFragment(event.getItemAmount(), true)
+                .addFragment(" ")
+                .addFragment(event.getItemType().name().toLowerCase(), true)
+                .addFragment(" from a furnace at ")
+                .addFragment(event.getPlayer().getLocation(), true)
                 .addFragment(".")
                 .send();
     }
