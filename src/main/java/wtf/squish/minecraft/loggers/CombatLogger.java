@@ -1,5 +1,6 @@
 package wtf.squish.minecraft.loggers;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,12 +49,20 @@ public class CombatLogger implements Listener {
         if(event.getEntity() instanceof Player) return;
         if(event.getEntity().getKiller() == null) return;
 
+        Material itemMaterial = event.getEntity().getKiller().getInventory().getItemInMainHand().getType();
+        String itemName;
+        if(itemMaterial == Material.AIR) {
+            itemName = "hand";
+        } else {
+            itemName = itemMaterial.name().toLowerCase();
+        }
+
         new Log("Combat | Entity Death")
                 .addFragment(event.getEntity().getKiller())
                 .addFragment(" killed a ")
                 .addFragment(event.getEntity().getType().name().toLowerCase(), true)
                 .addFragment(" with a ")
-                .addFragment(event.getEntity().getKiller().getInventory().getItemInMainHand().getType().name().toLowerCase(), true)
+                .addFragment(itemName, true)
                 .addFragment(".")
                 .send();
     }
@@ -83,12 +92,20 @@ public class CombatLogger implements Listener {
         }
         if(killer == null) return;
 
+        Material itemMaterial = killer.getInventory().getItemInMainHand().getType();
+        String itemName;
+        if(itemMaterial == Material.AIR) {
+            itemName = "hand";
+        } else {
+            itemName = itemMaterial.name().toLowerCase();
+        }
+
         new Log("Combat | PvP")
                 .addFragment(killer)
                 .addFragment(" killed ")
                 .addFragment(player)
                 .addFragment(" with a ")
-                .addFragment(killer.getInventory().getItemInMainHand().getType().name().toLowerCase(), true)
+                .addFragment(itemName, true)
                 .addFragment(".")
                 .send();
     }

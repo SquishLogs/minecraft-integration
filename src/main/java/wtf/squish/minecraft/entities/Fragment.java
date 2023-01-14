@@ -1,6 +1,8 @@
 package wtf.squish.minecraft.entities;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import wtf.squish.minecraft.enums.FragmentType;
 
@@ -37,8 +39,15 @@ public class Fragment {
         this.data.put("location", player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
 
         HashMap<String, Object> itemData = new HashMap<>();
-        itemData.put("name", player.getInventory().getItemInMainHand().getType().name().replace('_', ' ').toLowerCase());
-        itemData.put("class", player.getInventory().getItemInMainHand().getType().name());
+        Material itemMaterial = player.getInventory().getItemInMainHand().getType();
+        String itemName;
+        if(itemMaterial == Material.AIR) {
+            itemName = "hand";
+        } else {
+            itemName = itemMaterial.name().replace('_', ' ').toLowerCase();
+        }
+        itemData.put("name", itemName);
+        itemData.put("class", itemMaterial.name());
         this.data.put("main_item", itemData);
     }
 
