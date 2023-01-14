@@ -145,9 +145,8 @@ public class LogWebsocketClient extends WebSocketClient {
             }
             this.reconnectionQueue.add(text);
             this.reconnect();
-            return;
+        } else {
+            super.send(text);
         }
-
-        super.send(text);
     }
 }
