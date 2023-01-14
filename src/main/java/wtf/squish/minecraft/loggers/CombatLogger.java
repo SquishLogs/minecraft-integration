@@ -119,7 +119,18 @@ public class CombatLogger implements Listener {
         // Thanks https://www.spigotmc.org/threads/get-the-mob-that-killed-a-player.508310/#post-4175020
         // Why this sorta logic isn't possible in onPlayerDeath or onEntityDeath is beyond me
         if(!(event.getEntity() instanceof Player player)) return;
-        if(event.getDamager() instanceof Player) return; // Other loggers deal with this
+        if(event.getDamager() instanceof Player damager) {
+            if(event.getFinalDamage() >= player.getHealth()) return; // Other logs will deal with this one
+            new Log("Combat | PvP")
+                    .addFragment(player)
+                    .addFragment(" was damaged by ")
+                    .addFragment(damager)
+                    .addFragment(" for ")
+                    .addFragment((int) event.getFinalDamage(), true)
+                    .addFragment(" damage.")
+                    .send();
+            return;
+        }
         if(event.getFinalDamage() < player.getHealth()) return;
 
         new Log("Combat | PvP")
