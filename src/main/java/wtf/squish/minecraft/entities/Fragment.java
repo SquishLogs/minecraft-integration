@@ -34,6 +34,7 @@ public class Fragment {
         this.data.put("platform_id", player.getUniqueId().toString());
         this.data.put("health", player.getHealth());
         this.data.put("hunger", player.getFoodLevel());
+        this.data.put("location", player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
 
         HashMap<String, Object> itemData = new HashMap<>();
         itemData.put("name", player.getInventory().getItemInMainHand().getType().name().replace('_', ' ').toLowerCase());
