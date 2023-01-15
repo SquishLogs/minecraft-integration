@@ -22,3 +22,9 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+shadowJar {
+    archiveBaseName.set('SquishLogs')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
