@@ -34,4 +34,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            build/libs/*
+            build/libs/SquishLogs.jar
