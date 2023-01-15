@@ -30,3 +30,8 @@ jobs:
           distribution: 'adopt'
       - name: Build with Gradle
         run: chmod +x ./gradlew; ./gradlew shadowJar
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build/libs/*
