@@ -5,7 +5,7 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.framing.CloseFrame;
 import org.java_websocket.handshake.ServerHandshake;
 import wtf.squish.minecraft.SquishLogs;
-import wtf.squish.minecraft.entities.AuthResponse;
+import wtf.squish.minecraft.entities.SocketResponse;
 import wtf.squish.minecraft.entities.Log;
 import wtf.squish.minecraft.util.Output;
 
@@ -60,7 +60,9 @@ public class LogWebsocketClient extends WebSocketClient {
     @Override
     public void onMessage(String message) {
         Gson gson = new Gson();
-        AuthResponse response = gson.fromJson(message, AuthResponse.class);
+        SocketResponse response = gson.fromJson(message, SocketResponse.class);
+
+        if(response.getType().equals("ping")) return;
         if(!response.isSuccess()) {
             Output.print("Websocket authentication failed.");
             Output.print("Check your configuration!");
