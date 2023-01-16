@@ -1,5 +1,7 @@
 package wtf.squish.minecraft.entities;
 
+import java.net.URI;
+
 /**
  * Stores all the information about the server.
  * This is the info gotten from the /api/v1/server request.
@@ -13,6 +15,7 @@ public class ServerInformation {
     private String serverType;
     private String color;
     private String token;
+    private String discordWebhook;
     private SocketInformation socket;
 
     // getters setters
@@ -36,6 +39,9 @@ public class ServerInformation {
 
     public String getToken() {return token;}
     public void setToken(String token) {this.token = token;}
+
+    public String getDiscordWebhook() {return discordWebhook;}
+    public void setDiscordWebhook(String webhook) {this.discordWebhook = webhook;}
 
     public SocketInformation getSocket() {return socket;}
     public void setSocket(SocketInformation socket) {this.socket = socket;}

@@ -1,13 +1,22 @@
 package wtf.squish.minecraft.entities;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import wtf.squish.minecraft.SquishLogs;
+import wtf.squish.minecraft.util.Output;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Stores and handles log objects.
@@ -143,6 +152,38 @@ public class Log {
 
         String log = gson.toJson(values);
         SquishLogs.getWebSocket().send(log);
+
+        if(SquishLogs.getServerInfo().getDiscordWebhook() != null) {
+            // Discord time
+            DiscordWebhook webhook = new DiscordWebhook(SquishLogs.getServerInfo().getDiscordWebhook());
+            DiscordWebhook.EmbedObject embed = new DiscordWebhook.EmbedObject();
+            embed.setTitle(this.category);
+            embed.setColor(Color.decode(SquishLogs.getServerInfo().getColor()));
+            embed.setFooter("Powered by Squish Logs", "");
+
+            StringBuilder stringLog = new StringBuilder();
+            for(Fragment fragment : this.fragments) {
+                switch(fragment.getType()) {
+                    case TEXT -> stringLog.append(fragment.getData().get("text"));
+                    case PLAYER -> {
+                        stringLog.append(fragment.getData().get("name"));
+                        embed.addField(fragment.getData().get("name").toString(),
+                                "Health: " + fragment.getData().get("health")
+                                        + " | Hunger: " + fragment.getData().get("hunger")
+                                        + " | Location: " + fragment.getData().get("location"),
+                                false);
+                    }
+                }
+            }
+            embed.setDescription(stringLog.toString());
+            webhook.addEmbed(embed);
+            try {
+                webhook.execute();
+            } catch(IOException e) {
+                Output.print("Failed to send discord webhook:");
+                e.printStackTrace();
+            }
+        }
     }
 
     // getters/setters
