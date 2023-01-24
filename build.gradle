@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'wtf.squish'
-version '1.0.0-DEVELOPMENT'
+version '0.1.1-PRERELEASE'
 
 repositories {
     mavenCentral()
