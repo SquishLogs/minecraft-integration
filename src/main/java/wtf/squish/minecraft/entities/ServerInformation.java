@@ -14,7 +14,6 @@ public class ServerInformation {
     private String ipAddress;
     private String serverType;
     private String color;
-    private String token;
     private String discordWebhook;
     private SocketInformation socket;
 
@@ -36,9 +35,6 @@ public class ServerInformation {
 
     public String getColor() {return color;}
     public void setColor(String color) {this.color = color;}
-
-    public String getToken() {return token;}
-    public void setToken(String token) {this.token = token;}
 
     public String getDiscordWebhook() {return discordWebhook;}
     public void setDiscordWebhook(String webhook) {this.discordWebhook = webhook;}

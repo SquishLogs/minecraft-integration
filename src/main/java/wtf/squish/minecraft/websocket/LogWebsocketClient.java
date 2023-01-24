@@ -49,7 +49,7 @@ public class LogWebsocketClient extends WebSocketClient {
         HashMap<String, String> authValues = new HashMap<>();
         authValues.put("type", "auth");
         authValues.put("community", SquishLogs.getConfigInstance().getString("community"));
-        authValues.put("token", SquishLogs.getServerInfo().getToken());
+        authValues.put("token", SquishLogs.getConfigInstance().getString("token"));
         send(gson.toJson(authValues));
     }
 
