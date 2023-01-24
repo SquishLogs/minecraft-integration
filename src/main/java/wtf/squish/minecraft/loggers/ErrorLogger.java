@@ -64,7 +64,7 @@ public class ErrorLogger extends Handler {
             data.put("hash", String.valueOf(crc.getValue()));
             data.put("gmv", SquishLogs.getInstance().getServer().getVersion());
             data.put("os", System.getProperty("os.name"));
-            data.put("realm", "MyAss");
+            data.put("realm", "N/A");
 
             StringBuilder url = new StringBuilder(SquishLogs.getConfigInstance().getString("domain") + "/api/v1/error?");
             for(Map.Entry<String, String> map : data.entrySet()) {
