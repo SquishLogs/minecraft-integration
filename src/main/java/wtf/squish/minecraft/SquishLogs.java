@@ -3,6 +3,7 @@ package wtf.squish.minecraft;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,6 +34,7 @@ public class SquishLogs extends JavaPlugin {
             .version(HttpClient.Version.HTTP_2)
             .connectTimeout(Duration.ofSeconds(10))
             .build();
+
     private static ServerInformation serverInfo;
     private static final Color logColor = new Color(29, 97, 129);
 
@@ -67,6 +69,11 @@ public class SquishLogs extends JavaPlugin {
         }
         Output.print("  Server: " + serverInfo.getName() + " (" + serverInfo.getIpAddress() + ")");
         Output.print("  Server/Socket Region: " + serverInfo.getRegionID() + " / " + serverInfo.getSocket().getContinent());
+        if(serverInfo.getLogErrors() == 1) {
+            Output.print("Setting up error logging...");
+            Bukkit.getLogger().addHandler(new ErrorLogger());
+        }
+
         Output.print("Attempting to connect to websocket...");
         connectToWebsocket();
     }
@@ -161,6 +168,8 @@ public class SquishLogs extends JavaPlugin {
     public static Color getLogColor() {
         return logColor;
     }
+
+    public static HttpClient getHttpClient() { return httpClient; }
 
     /**
      * Registers a player on the api.

@@ -14,6 +14,7 @@ public class ServerInformation {
     private String ipAddress;
     private String serverType;
     private String color;
+    private short logErrors; // Either a 1 or a 0 - fuck you GSON for not being able to parse one between the other ffs
     private String discordWebhook;
     private SocketInformation socket;
 
@@ -35,6 +36,9 @@ public class ServerInformation {
 
     public String getColor() {return color;}
     public void setColor(String color) {this.color = color;}
+
+    public short getLogErrors() {return logErrors;}
+    public void setLogErrors(short logErrors) {this.logErrors = logErrors;}
 
     public String getDiscordWebhook() {return discordWebhook;}
     public void setDiscordWebhook(String webhook) {this.discordWebhook = webhook;}
