@@ -143,7 +143,7 @@ public class DiscordWebhook {
         URL url = new URL(this.url);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         connection.addRequestProperty("Content-Type", "application/json");
-        connection.addRequestProperty("User-Agent", "Java-DiscordWebhook-BY-Gelox_");
+        connection.addRequestProperty("User-Agent", "SquishLogsMinecraft/1.0.0 (+https://squish.wtf/)");
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
 
