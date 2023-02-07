@@ -305,7 +305,7 @@ public class PlayerLogger implements Listener {
 
         new Log("Player | Chest Open")
                 .addFragment(player)
-                .addFragment(" opened a chest, located at ")
+                .addFragment(" opened a chest at ")
                 .addFragment(event.getInventory().getLocation())
                 .addFragment(".")
                 .send();
@@ -323,7 +323,7 @@ public class PlayerLogger implements Listener {
 
         new Log("Player | Chest Close")
                 .addFragment(player)
-                .addFragment(" closed a chest, located at ")
+                .addFragment(" closed a chest at ")
                 .addFragment(event.getInventory().getLocation())
                 .addFragment(".")
                 .send();
