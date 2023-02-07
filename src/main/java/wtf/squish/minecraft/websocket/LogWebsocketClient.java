@@ -95,7 +95,7 @@ public class LogWebsocketClient extends WebSocketClient {
             send(gson.toJson(archiveValues));
 
             // Start Log
-            new Log("System")
+            new Log("System", "Server")
                     .addFragment("Server started.")
                     .send();
         }

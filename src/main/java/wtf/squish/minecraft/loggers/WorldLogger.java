@@ -27,7 +27,7 @@ public class WorldLogger implements Listener {
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         if(event.isCancelled()) return;
 
-        new Log("World | Dropped Item")
+        new Log("World", "Dropped Item")
                 .addFragment(event.getPlayer())
                 .addFragment(" dropped ")
                 .addFragment(event.getItemDrop().getItemStack().getAmount(), true)
@@ -47,7 +47,7 @@ public class WorldLogger implements Listener {
     public void onRaidTriggerEvent(RaidTriggerEvent event) {
         if(event.isCancelled()) return;
 
-        new Log("World | Raid Started")
+        new Log("World", "Raid Started")
                 .addFragment(event.getPlayer())
                 .addFragment(" triggered a raid at ")
                 .addFragment(event.getRaid().getLocation(), true)
@@ -61,7 +61,7 @@ public class WorldLogger implements Listener {
      */
     @EventHandler
     public void onRaidFinish(RaidFinishEvent event) {
-        new Log("World | Raid End")
+        new Log("World", "Raid End")
                 .addFragment("Raid at ")
                 .addFragment(event.getRaid().getLocation(), true)
                 .addFragment(" finished.")
@@ -74,7 +74,7 @@ public class WorldLogger implements Listener {
      */
     @EventHandler
     public void onRaidStop(RaidStopEvent event) {
-        new Log("World | Raid End")
+        new Log("World", "Raid End")
                 .addFragment("Raid at ")
                 .addFragment(event.getRaid().getLocation(), true)
                 .addFragment(" was stopped.")
@@ -97,7 +97,7 @@ public class WorldLogger implements Listener {
             name = event.getRightClicked().getName();
         }
 
-        new Log("World | Mob Renamed")
+        new Log("World", "Mob Renamed")
                 .addFragment(event.getPlayer())
                 .addFragment(" renamed ")
                 .addFragment(name, true)
@@ -115,7 +115,7 @@ public class WorldLogger implements Listener {
         if(event.isCancelled()) return;
         if(event.getBlockPlaced().getType() != Material.FIRE) return;
 
-        new Log("World | Fire Started")
+        new Log("World", "Fire Started")
                 .addFragment(event.getPlayer())
                 .addFragment(" lit a fire at ")
                 .addFragment(event.getBlockPlaced().getLocation(), true)
@@ -131,14 +131,14 @@ public class WorldLogger implements Listener {
         if(event.isCancelled()) return;
 
         if(event.getEntityType() == EntityType.WITHER) {
-            new Log("World | Wither Boss")
+            new Log("World", "Wither Boss")
                     .addFragment("A wither was spawned at ")
                     .addFragment(event.getLocation(), true)
                     .send();
             return;
         }
         if(event.getEntityType() == EntityType.ENDER_DRAGON) {
-            new Log("World | Ender Dragon Boss")
+            new Log("World", "Ender Dragon Boss")
                     .addFragment("An ender dragon was spawned at ")
                     .addFragment(event.getLocation(), true)
                     .send();

@@ -79,7 +79,7 @@ public class SquishLogs extends JavaPlugin {
     }
 
     public void onDisable() {
-        new Log("System")
+        new Log("System", "Server")
                 .addFragment("Server stopped.")
                 .send();
 

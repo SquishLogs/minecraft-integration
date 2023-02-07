@@ -23,8 +23,8 @@ public class Log {
      * Creates a new log.
      * @param category The category for this log.
      */
-    public Log(String category) {
-        this.category = category;
+    public Log(String master, String category) {
+        this.category = master + " | " + category;
     }
 
     /**

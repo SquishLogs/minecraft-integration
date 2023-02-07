@@ -33,7 +33,7 @@ public class PlayerLogger implements Listener {
         SquishLogs.registerPlayer(event.getPlayer());
 
         // Log them
-        new Log("Player | Connect")
+        new Log("Player", "Connect")
                 .addFragment(event.getPlayer())
                 .addFragment(" joined the server.")
                 .send();
@@ -45,7 +45,7 @@ public class PlayerLogger implements Listener {
      */
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        new Log("Player | Disconnect")
+        new Log("Player", "Disconnect")
                 .addFragment(event.getPlayer())
                 .addFragment(" left the server.")
                 .send();
@@ -59,7 +59,7 @@ public class PlayerLogger implements Listener {
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         if(event.isCancelled()) return;
 
-        new Log("Player | Chat")
+        new Log("Player", "Chat")
                 .addFragment(event.getPlayer())
                 .addFragment(" said in chat ")
                 .addFragment(event.getMessage(), true)
@@ -75,7 +75,7 @@ public class PlayerLogger implements Listener {
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if(event.isCancelled()) return;
 
-        new Log("Player | Command")
+        new Log("Player", "Command")
                 .addFragment(event.getPlayer())
                 .addFragment(" ran command ")
                 .addFragment(event.getMessage(), true)
@@ -92,7 +92,7 @@ public class PlayerLogger implements Listener {
         if(event.isCancelled()) return;
         if(event.getCause() != PlayerTeleportEvent.TeleportCause.COMMAND) return;
 
-        new Log("Player | Teleport")
+        new Log("Player", "Teleport")
                 .addFragment(event.getPlayer())
                 .addFragment(" teleported from ")
                 .addFragment(event.getFrom(), true)
@@ -110,7 +110,7 @@ public class PlayerLogger implements Listener {
     public void onPlayerGameModeChange(PlayerGameModeChangeEvent event) {
         if(event.isCancelled()) return;
 
-        new Log("Player | Gamemode")
+        new Log("Player", "Gamemode")
                 .addFragment(event.getPlayer())
                 .addFragment(" set their gamemode to ")
                 .addFragment(event.getNewGameMode().name().toLowerCase(), true)
@@ -132,14 +132,14 @@ public class PlayerLogger implements Listener {
         Player player = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
 
         if(event.getCurrentItem() != null) {
-            new Log("Player | Villager Trade")
+            new Log("Player", "Villager Trade")
                     .addFragment(player)
                     .addFragment(" traded with a villager to get a ")
                     .addFragment(event.getCurrentItem().getType().name().toLowerCase(), true)
                     .addFragment(".")
                     .send();
         } else {
-            new Log("Player | Villager Trade")
+            new Log("Player", "Villager Trade")
                     .addFragment(player)
                     .addFragment(" traded with a villager to get an unknown item.")
                     .send();
@@ -168,7 +168,7 @@ public class PlayerLogger implements Listener {
             amount = lowerAmount * item.getAmount();
         }
 
-        new Log("Player | Craft")
+        new Log("Player", "Craft")
                 .addFragment(player)
                 .addFragment(" crafted ")
                 .addFragment(amount, true)
@@ -184,7 +184,7 @@ public class PlayerLogger implements Listener {
      */
     @EventHandler
     public void onFurnaceExtract(FurnaceExtractEvent event) {
-        new Log("Player | Smelt")
+        new Log("Player", "Smelt")
                 .addFragment(event.getPlayer())
                 .addFragment(" took out ")
                 .addFragment(event.getItemAmount(), true)
@@ -215,7 +215,7 @@ public class PlayerLogger implements Listener {
         }
         String enchantments = builder.toString();
 
-        new Log("Player | Enchant")
+        new Log("Player", "Enchant")
                 .addFragment(event.getEnchanter())
                 .addFragment(" enchanted their ")
                 .addFragment(event.getItem().getType().name().toLowerCase(), true)
@@ -232,7 +232,7 @@ public class PlayerLogger implements Listener {
     @EventHandler
     public void onPlayerAdvancementDone(PlayerAdvancementDoneEvent event) {
         if(event.getAdvancement().getDisplay() == null) return;
-        new Log("Player | Advancement")
+        new Log("Player", "Advancement")
                 .addFragment(event.getPlayer())
                 .addFragment(" earned the advancement ")
                 .addFragment(event.getAdvancement().getDisplay().getTitle(), true)
@@ -252,7 +252,7 @@ public class PlayerLogger implements Listener {
         switch(event.getAction()) {
             case ADDED, CHANGED -> {
                 if(event.getNewEffect() == null) return;
-                new Log("Player | Potion")
+                new Log("Player", "Potion")
                         .addFragment(player)
                         .addFragment(" was given the effect of ")
                         .addFragment(event.getNewEffect().getType().getName(), true)
@@ -275,14 +275,14 @@ public class PlayerLogger implements Listener {
                     }
                 }, 1);
 
-                new Log("Player | Potion")
+                new Log("Player", "Potion")
                         .addFragment(player)
                         .addFragment(" had their effects cleared.")
                         .send();
             }
             case REMOVED -> {
                 if(event.getOldEffect() == null) return;
-                new Log("Player | Potion")
+                new Log("Player", "Potion")
                         .addFragment(player)
                         .addFragment(" had their ")
                         .addFragment(event.getOldEffect().getType().getName(), true)
@@ -303,7 +303,7 @@ public class PlayerLogger implements Listener {
         if(!(event.getPlayer() instanceof Player)) return;
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
 
-        new Log("Player | Chest Open")
+        new Log("Player", "Chest Open")
                 .addFragment(player)
                 .addFragment(" opened a chest at ")
                 .addFragment(event.getInventory().getLocation())
@@ -321,7 +321,7 @@ public class PlayerLogger implements Listener {
         if(!(event.getPlayer() instanceof Player)) return;
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
 
-        new Log("Player | Chest Close")
+        new Log("Player", "Chest Close")
                 .addFragment(player)
                 .addFragment(" closed a chest at ")
                 .addFragment(event.getInventory().getLocation())

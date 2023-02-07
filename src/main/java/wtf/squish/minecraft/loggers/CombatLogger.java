@@ -57,7 +57,7 @@ public class CombatLogger implements Listener {
             itemName = itemMaterial.name().toLowerCase();
         }
 
-        new Log("Combat | Entity Death")
+        new Log("Combat", "Entity Death")
                 .addFragment(event.getEntity().getKiller())
                 .addFragment(" killed a ")
                 .addFragment(event.getEntity().getType().name().toLowerCase(), true)
@@ -82,7 +82,7 @@ public class CombatLogger implements Listener {
                 && cause != EntityDamageEvent.DamageCause.ENTITY_EXPLOSION
                 && cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK
             ) {
-                new Log("Combat | Death")
+                new Log("Combat", "Death")
                         .addFragment(player)
                         .addFragment(" ")
                         .addFragment(causeStrings.get(player.getLastDamageCause().getCause()))
@@ -100,7 +100,7 @@ public class CombatLogger implements Listener {
             itemName = itemMaterial.name().toLowerCase();
         }
 
-        new Log("Combat | PvP")
+        new Log("Combat", "PvP")
                 .addFragment(killer)
                 .addFragment(" killed ")
                 .addFragment(player)
@@ -121,7 +121,7 @@ public class CombatLogger implements Listener {
         if(!(event.getEntity() instanceof Player player)) return;
         if(event.getDamager() instanceof Player damager) {
             if(event.getFinalDamage() >= player.getHealth()) return; // Other logs will deal with this one
-            new Log("Combat | PvP")
+            new Log("Combat", "PvP")
                     .addFragment(player)
                     .addFragment(" was damaged by ")
                     .addFragment(damager)
@@ -133,7 +133,7 @@ public class CombatLogger implements Listener {
         }
         if(event.getFinalDamage() < player.getHealth()) return;
 
-        new Log("Combat | PvP")
+        new Log("Combat", "PvP")
                 .addFragment(player)
                 .addFragment(" was killed by a ")
                 .addFragment(event.getDamager().getName(), true)

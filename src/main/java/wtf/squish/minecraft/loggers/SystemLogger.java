@@ -18,7 +18,7 @@ public class SystemLogger implements Listener {
     public void onServerCommand(ServerCommandEvent event) {
         if(event.isCancelled()) return;
 
-        new Log("System")
+        new Log("System", "Command")
                 .addFragment("Server ran command ")
                 .addFragment(event.getCommand(), true)
                 .addFragment(".")
