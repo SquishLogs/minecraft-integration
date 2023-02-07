@@ -1,7 +1,5 @@
 package wtf.squish.minecraft.entities;
 
-import java.net.URI;
-
 /**
  * Stores all the information about the server.
  * This is the info gotten from the /api/v1/server request.

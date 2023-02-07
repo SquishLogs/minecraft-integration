@@ -1,8 +1,6 @@
 package wtf.squish.minecraft.entities;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import wtf.squish.minecraft.SquishLogs;
@@ -10,13 +8,8 @@ import wtf.squish.minecraft.util.Output;
 
 import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Stores and handles log objects.

@@ -1,23 +1,15 @@
 package wtf.squish.minecraft.loggers;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import wtf.squish.minecraft.SquishLogs;
-import wtf.squish.minecraft.entities.ServerInformation;
 import wtf.squish.minecraft.util.Output;
 
-import javax.xml.crypto.Data;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Handler;

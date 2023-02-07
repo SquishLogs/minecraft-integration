@@ -2,7 +2,6 @@ package wtf.squish.minecraft.entities;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import wtf.squish.minecraft.enums.FragmentType;
 
