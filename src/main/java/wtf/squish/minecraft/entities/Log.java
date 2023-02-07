@@ -141,10 +141,40 @@ public class Log {
     }
 
     /**
+     * Adds a piece of metadata to the previously added fragment.
+     * @param title The title of the metadata.
+     * @param text The text of the metadata.
+     * @return The log object.
+     */
+    public Log addMetadata(String title, String text) {
+        this.fragments.get(this.fragments.size() - 1).addFragmentMeta(title, text);
+        return this;
+    }
+
+    /**
+     * Creates x, y and z metadata entries from a location object.
+     * @param location The location.
+     * @return The log object.
+     */
+    public Log addLocationMetadata(Location location) {
+        addMetadata("x", String.valueOf(location.getBlockX()));
+        addMetadata("y", String.valueOf(location.getBlockY()));
+        addMetadata("z", String.valueOf(location.getBlockZ()));
+        return this;
+    }
+
+    /**
      * Sends the log to the server.
      */
     public void send() {
         Gson gson = new Gson();
+
+        // i blame owain
+        for(Fragment fragment : this.fragments) {
+            if(fragment.getMeta().isEmpty()) continue;
+            fragment.addData("meta", fragment.getMeta());
+        }
+
         HashMap<String, Object> values = new HashMap<>();
         values.put("type", "log");
         values.put("category", this.category);

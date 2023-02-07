@@ -7,7 +7,9 @@ import org.bukkit.entity.Player;
 import wtf.squish.minecraft.enums.FragmentType;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Stores information about log fragments.
@@ -16,6 +18,8 @@ import java.util.HashMap;
 public class Fragment {
     private FragmentType type;
     private final HashMap<String, Object> data = new HashMap<>();
+
+    private transient final List<FragmentMeta> meta = new ArrayList<>(); // This is to prevent unsafe operations issues with putting meta into the data map
 
     /**
      * Creates a fragment. This constructor requires you to manually add the data.
@@ -80,6 +84,15 @@ public class Fragment {
         this(location.getBlockX() + ", " + location.getBlockY() + ", " + location.getBlockZ(), color);
     }
 
+    /**
+     * Adds an entry of metadata to the fragment.
+     * @param title The title of the metadata entry.
+     * @param text The text of the metadata entry.
+     */
+    public void addFragmentMeta(String title, String text) {
+        meta.add(new FragmentMeta(title, text));
+    }
+
     // get/set
     public FragmentType getType() {return type;}
     public void setType(FragmentType type) {this.type = type;}
@@ -88,6 +101,8 @@ public class Fragment {
     public void addData(String key, Object value) {
         this.data.put(key, value);
     }
+
+    public List<FragmentMeta> getMeta() {return meta;}
 
     /**
      * Formats the color object for the API.
