@@ -61,7 +61,7 @@ public class PlayerLogger implements Listener {
 
         new Log("Player", "Chat")
                 .addFragment(event.getPlayer())
-                .addFragment(" said in chat ")
+                .addFragment(" said ")
                 .addFragment(event.getMessage(), true)
                 .addFragment(".")
                 .send();
@@ -135,7 +135,7 @@ public class PlayerLogger implements Listener {
             new Log("Player", "Villager Trade")
                     .addFragment(player)
                     .addFragment(" traded with a villager to get a ")
-                    .addFragment(event.getCurrentItem().getType().name().toLowerCase(), true)
+                    .addFragment(event.getCurrentItem())
                     .addFragment(".")
                     .send();
         } else {
@@ -173,7 +173,7 @@ public class PlayerLogger implements Listener {
                 .addFragment(" crafted ")
                 .addFragment(amount, true)
                 .addFragment(" of ")
-                .addFragment(event.getRecipe().getResult().getType().name().toLowerCase(), true)
+                .addFragment(event.getRecipe().getResult())
                 .addFragment(".")
                 .send();
     }
@@ -189,7 +189,7 @@ public class PlayerLogger implements Listener {
                 .addFragment(" took out ")
                 .addFragment(event.getItemAmount(), true)
                 .addFragment(" ")
-                .addFragment(event.getItemType().name().toLowerCase(), true)
+                .addFragment(event.getItemType().name().toLowerCase(), true) // Why is this not an itemstack? Ffs
                 .addFragment(" from a furnace at ")
                 .addFragment(event.getPlayer().getLocation(), true)
                 .addFragment(".")
@@ -218,7 +218,7 @@ public class PlayerLogger implements Listener {
         new Log("Player", "Enchant")
                 .addFragment(event.getEnchanter())
                 .addFragment(" enchanted their ")
-                .addFragment(event.getItem().getType().name().toLowerCase(), true)
+                .addFragment(event.getItem())
                 .addFragment(" with ")
                 .addFragment(enchantments, true)
                 .addFragment(".")

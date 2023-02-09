@@ -8,7 +8,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.entities.Log;
+import wtf.squish.minecraft.util.Output;
 
 import java.util.HashMap;
 
@@ -49,12 +51,15 @@ public class CombatLogger implements Listener {
         if(event.getEntity() instanceof Player) return;
         if(event.getEntity().getKiller() == null) return;
 
-        Material itemMaterial = event.getEntity().getKiller().getInventory().getItemInMainHand().getType();
-        String itemName;
-        if(itemMaterial == Material.AIR) {
-            itemName = "hand";
-        } else {
-            itemName = itemMaterial.name().toLowerCase();
+        ItemStack item = event.getEntity().getKiller().getInventory().getItemInMainHand();
+        if(item.getType() == Material.AIR) {
+            new Log("Combat", "Entity Death")
+                    .addFragment(event.getEntity().getKiller())
+                    .addFragment(" killed a ")
+                    .addFragment(event.getEntity().getType().name().toLowerCase(), true)
+                    .addFragment(" with their hands.")
+                    .send();
+            return;
         }
 
         new Log("Combat", "Entity Death")
@@ -62,7 +67,7 @@ public class CombatLogger implements Listener {
                 .addFragment(" killed a ")
                 .addFragment(event.getEntity().getType().name().toLowerCase(), true)
                 .addFragment(" with a ")
-                .addFragment(itemName, true)
+                .addFragment(item)
                 .addFragment(".")
                 .send();
     }
@@ -92,12 +97,15 @@ public class CombatLogger implements Listener {
         }
         if(killer == null) return;
 
-        Material itemMaterial = killer.getInventory().getItemInMainHand().getType();
-        String itemName;
-        if(itemMaterial == Material.AIR) {
-            itemName = "hand";
-        } else {
-            itemName = itemMaterial.name().toLowerCase();
+        ItemStack item = killer.getInventory().getItemInMainHand();
+        if(item.getType() == Material.AIR) {
+            new Log("Combat", "PvP")
+                    .addFragment(killer)
+                    .addFragment(" killed ")
+                    .addFragment(player)
+                    .addFragment(" with their hands.")
+                    .send();
+            return;
         }
 
         new Log("Combat", "PvP")
@@ -105,7 +113,7 @@ public class CombatLogger implements Listener {
                 .addFragment(" killed ")
                 .addFragment(player)
                 .addFragment(" with a ")
-                .addFragment(itemName, true)
+                .addFragment(item)
                 .addFragment(".")
                 .send();
     }

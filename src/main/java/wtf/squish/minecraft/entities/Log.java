@@ -2,7 +2,9 @@ package wtf.squish.minecraft.entities;
 
 import com.google.gson.*;
 import org.bukkit.Location;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.util.Output;
 
@@ -131,6 +133,24 @@ public class Log {
      */
     public Log addFragment(Location location) {
         return this.addFragment(new Fragment(location, null));
+    }
+
+    /**
+     * Adds a new item fragment.
+     * @param item The item.
+     * @return The log object.
+     */
+    public Log addFragment(Item item) {
+        return this.addFragment(new Fragment(item));
+    }
+
+    /**
+     * Adds a new itemstack fragment.
+     * @param item The itemstack.
+     * @return The log object.
+     */
+    public Log addFragment(ItemStack item) {
+        return this.addFragment(new Fragment(item));
     }
 
     /**
