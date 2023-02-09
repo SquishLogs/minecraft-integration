@@ -121,6 +121,14 @@ public class LogWebsocketClient extends WebSocketClient {
     }
 
     /**
+     * Closes the websocket, with zero reconnection attempt.
+     */
+    public void closeNoReconnection() {
+        stayClosed = true;
+        this.close();
+    }
+
+    /**
      * Runs when the websocket errors out.
      * @param ex The exception causing this error
      */

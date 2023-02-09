@@ -83,6 +83,8 @@ public class SquishLogs extends JavaPlugin {
                 .addFragment("Server stopped.")
                 .send();
 
+        webSocketClient.close();
+
         instance = null;
     }
 
