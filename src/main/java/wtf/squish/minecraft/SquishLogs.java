@@ -4,13 +4,13 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import wtf.squish.minecraft.entities.Log;
 import wtf.squish.minecraft.entities.ServerInformation;
 import wtf.squish.minecraft.loggers.*;
-import wtf.squish.minecraft.util.Output;
 import wtf.squish.minecraft.websocket.LogWebsocketClient;
 
 import java.awt.*;
@@ -40,7 +40,7 @@ public class SquishLogs extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Output.print("Loading SquishLogs...");
+        print("Loading SquishLogs...");
         instance = this;
 
         // Config
@@ -57,24 +57,24 @@ public class SquishLogs extends JavaPlugin {
         // Fetch the websocket info
         boolean gotInformation = getWebsocketInfo();
         if(!gotInformation || serverInfo == null) {
-            Output.print("Failed to receive information about the server.");
-            Output.print("Refusing to go any further.");
+            print("Failed to receive information about the server.");
+            print("Refusing to go any further.");
             return;
         }
 
-        Output.print("Server information received.");
+        print("Server information received.");
         if(!serverInfo.getServerType().equals("Minecraft")) {
-            Output.print("Uh, this isn't a minecraft server type...");
-            Output.print("Unsure what to do here, but we'll just continue on and hope it's fine.");
+            print("Uh, this isn't a minecraft server type...");
+            print("Unsure what to do here, but we'll just continue on and hope it's fine.");
         }
-        Output.print("  Server: " + serverInfo.getName() + " (" + serverInfo.getIpAddress() + ")");
-        Output.print("  Server/Socket Region: " + serverInfo.getRegionID() + " / " + serverInfo.getSocket().getContinent());
+        print("  Server: " + serverInfo.getName() + " (" + serverInfo.getIpAddress() + ")");
+        print("  Server/Socket Region: " + serverInfo.getRegionID() + " / " + serverInfo.getSocket().getContinent());
         if(serverInfo.getLogErrors() == 1) {
-            Output.print("Setting up error logging...");
+            print("Setting up error logging...");
             Bukkit.getLogger().addHandler(new ErrorLogger());
         }
 
-        Output.print("Attempting to connect to websocket...");
+        print("Attempting to connect to websocket...");
         connectToWebsocket();
     }
 
@@ -86,6 +86,14 @@ public class SquishLogs extends JavaPlugin {
         webSocketClient.close();
 
         instance = null;
+    }
+
+    /**
+     * Prints a message to the console.
+     * @param message The message to send.
+     */
+    public static void print(String message) {
+        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "SquishLogs >> " + ChatColor.WHITE + message);
     }
 
     /**
@@ -124,13 +132,13 @@ public class SquishLogs extends JavaPlugin {
             responseBody = response.thenApply(HttpResponse::body).get();
             statusCode = response.thenApply(HttpResponse::statusCode).get();
         } catch(InterruptedException | ExecutionException e) {
-            Output.print("Failed to get valid response from URI " + request.uri().toString());
+            print("Failed to get valid response from URI " + request.uri().toString());
             throw new RuntimeException(e);
         }
 
         if(statusCode != 200) {
-            Output.print("Failed to get valid response from URI " + request.uri().toString());
-            Output.print("Response code " + statusCode);
+            print("Failed to get valid response from URI " + request.uri().toString());
+            print("Response code " + statusCode);
 
             return false;
         }

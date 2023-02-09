@@ -10,7 +10,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.entities.Log;
-import wtf.squish.minecraft.util.Output;
 
 import java.util.HashMap;
 

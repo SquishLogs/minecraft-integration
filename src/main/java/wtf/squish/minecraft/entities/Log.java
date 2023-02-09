@@ -6,7 +6,6 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.SquishLogs;
-import wtf.squish.minecraft.util.Output;
 
 import java.awt.*;
 import java.io.IOException;
@@ -223,7 +222,7 @@ public class Log {
             try {
                 webhook.execute();
             } catch(IOException e) {
-                Output.print("Failed to send discord webhook:");
+                SquishLogs.print("Failed to send discord webhook:");
                 e.printStackTrace();
             }
         }

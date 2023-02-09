@@ -7,7 +7,6 @@ import org.java_websocket.handshake.ServerHandshake;
 import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.SocketResponse;
 import wtf.squish.minecraft.entities.Log;
-import wtf.squish.minecraft.util.Output;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -38,9 +37,9 @@ public class LogWebsocketClient extends WebSocketClient {
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         if(!needsReconnected) {
-            Output.print("Connected to websocket. Attempting authentication...");
+            SquishLogs.print("Connected to websocket. Attempting authentication...");
         } else {
-            Output.print("Reconnected. Reauthenticating...");
+            SquishLogs.print("Reconnected. Reauthenticating...");
         }
 
         Gson gson = new Gson();
@@ -64,20 +63,20 @@ public class LogWebsocketClient extends WebSocketClient {
 
         if(response.getType().equals("ping")) return;
         if(!response.isSuccess()) {
-            Output.print("Websocket authentication failed.");
-            Output.print("Check your configuration!");
+            SquishLogs.print("Websocket authentication failed.");
+            SquishLogs.print("Check your configuration!");
 
             stayClosed = true;
             this.close();
             return;
         }
 
-        Output.print("Authenticated.");
+        SquishLogs.print("Authenticated.");
 
         if(needsReconnected) {
             if(reconnectionQueue != null) {
                 if(!reconnectionQueue.isEmpty()) {
-                    Output.print("Clearing log queue from reconnection.");
+                    SquishLogs.print("Clearing log queue from reconnection.");
                     for(String data : reconnectionQueue) {
                         send(data);
                     }
@@ -88,7 +87,7 @@ public class LogWebsocketClient extends WebSocketClient {
 
             needsReconnected = false;
         } else {
-            Output.print("Good to go!");
+            SquishLogs.print("Good to go!");
 
             HashMap<String, String> archiveValues = new HashMap<>();
             archiveValues.put("type", "archive");
@@ -112,11 +111,11 @@ public class LogWebsocketClient extends WebSocketClient {
     @Override
     public void onClose(int code, String reason, boolean remote) {
         if(stayClosed) {
-            Output.print("Websocket connection will not be re-established.");
+            SquishLogs.print("Websocket connection will not be re-established.");
             return;
         }
-        Output.print("Lost connection to websocket.");
-        Output.print("Waiting until next message before reconnecting...");
+        SquishLogs.print("Lost connection to websocket.");
+        SquishLogs.print("Waiting until next message before reconnecting...");
         needsReconnected = true;
     }
 
@@ -134,9 +133,9 @@ public class LogWebsocketClient extends WebSocketClient {
      */
     @Override
     public void onError(Exception ex) {
-        Output.print("Websocket produced this error:");
+        SquishLogs.print("Websocket produced this error:");
         ex.printStackTrace();
-        Output.print("Closing, so we can get a fresh connection.");
+        SquishLogs.print("Closing, so we can get a fresh connection.");
         this.close();
     }
 
@@ -148,7 +147,7 @@ public class LogWebsocketClient extends WebSocketClient {
     public void send(String text) {
         if(this.getConnection().isClosed()) {
             if(stayClosed) return;
-            Output.print("Attempting to reconnect...");
+            SquishLogs.print("Attempting to reconnect...");
 
             if(this.reconnectionQueue == null) {
                 this.reconnectionQueue = new ArrayList<>();

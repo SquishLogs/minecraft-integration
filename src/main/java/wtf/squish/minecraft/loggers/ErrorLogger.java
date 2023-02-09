@@ -1,7 +1,6 @@
 package wtf.squish.minecraft.loggers;
 
 import wtf.squish.minecraft.SquishLogs;
-import wtf.squish.minecraft.util.Output;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -82,15 +81,15 @@ public class ErrorLogger extends Handler {
             try {
 //                responseBody = response.thenApply(HttpResponse::body).get();
                 statusCode = response.thenApply(HttpResponse::statusCode).get();
-//                Output.print("Response body: " + responseBody);
-//                Output.print("Response code " + statusCode);
+//                SquishLogs.print("Response body: " + responseBody);
+//                SquishLogs.print("Response code " + statusCode);
             } catch(InterruptedException | ExecutionException e) {
-                Output.print("Failed to get valid response from error reporting URI.");
+                SquishLogs.print("Failed to get valid response from error reporting URI.");
             }
 
             if(statusCode != 200) {
-                Output.print("Failed to get valid response from URI " + request.uri().toString());
-                Output.print("Response code " + statusCode);
+                SquishLogs.print("Failed to get valid response from URI " + request.uri().toString());
+                SquishLogs.print("Response code " + statusCode);
             }
         }
     }
