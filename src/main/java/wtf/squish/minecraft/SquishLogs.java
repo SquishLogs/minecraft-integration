@@ -88,6 +88,10 @@ public class SquishLogs extends JavaPlugin {
         instance = null;
     }
 
+    /**
+     * Gets the plugin instance.
+     * @return The SquishLogs instance.
+     */
     public static SquishLogs getInstance() {
         return instance;
     }
