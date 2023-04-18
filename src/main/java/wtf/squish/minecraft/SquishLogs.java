@@ -37,6 +37,8 @@ public class SquishLogs extends JavaPlugin {
 
     private static ServerInformation serverInfo;
     private static final Color logColor = new Color(29, 97, 129);
+    public static int major = -1;
+    public static int minor = -1;
 
     @Override
     public void onEnable() {
@@ -45,6 +47,12 @@ public class SquishLogs extends JavaPlugin {
 
         // Config
         this.saveDefaultConfig();
+
+        // Version stuff
+        String version = Bukkit.getBukkitVersion().split("-")[0]; // eg: 1.18-R0.1-SNAPSHOT -> 1.18
+        String[] splitVersion = version.split("([.])");
+        SquishLogs.major = Integer.parseInt(splitVersion[0]);
+        SquishLogs.minor = Integer.parseInt(splitVersion[1]);
 
         // Register our listeners
         // Register your custom loggers here!
@@ -67,7 +75,7 @@ public class SquishLogs extends JavaPlugin {
             print("Uh, this isn't a minecraft server type...");
             print("Unsure what to do here, but we'll just continue on and hope it's fine.");
         }
-        print("  Server: " + serverInfo.getName() + " (" + serverInfo.getIpAddress() + ")");
+        print("  Server: " + serverInfo.getName() + " (" + serverInfo.getIpAddress() + ") ver " + Bukkit.getBukkitVersion());
         print("  Server/Socket Region: " + serverInfo.getRegionID() + " / " + serverInfo.getSocket().getContinent());
         if(serverInfo.getLogErrors() == 1) {
             print("Setting up error logging...");

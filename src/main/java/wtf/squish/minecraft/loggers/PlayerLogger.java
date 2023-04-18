@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
@@ -231,11 +232,17 @@ public class PlayerLogger implements Listener {
      */
     @EventHandler
     public void onPlayerAdvancementDone(PlayerAdvancementDoneEvent event) {
-        if(event.getAdvancement().getDisplay() == null) return;
+        String display = event.getAdvancement().getKey().getKey();
+        if(SquishLogs.major > 1 || (SquishLogs.minor >= 19 && SquishLogs.major == 1)) {
+            if(event.getAdvancement().getDisplay() != null) {
+                display = event.getAdvancement().getDisplay().getTitle();
+            }
+        }
+
         new Log("Player", "Advancement")
                 .addFragment(event.getPlayer())
                 .addFragment(" earned the advancement ")
-                .addFragment(event.getAdvancement().getDisplay().getTitle(), true)
+                .addFragment(display, true)
                 .addFragment(".")
                 .send();
     }
@@ -247,7 +254,8 @@ public class PlayerLogger implements Listener {
     @EventHandler
     public void onEntityPotionEffectEvent(EntityPotionEffectEvent event) {
         if(event.isCancelled()) return;
-        if(!(event.getEntity() instanceof Player player)) return;
+        if(!(event.getEntity() instanceof Player)) return;
+        Player player = (Player) event.getEntity();
 
         switch(event.getAction()) {
             case ADDED, CHANGED -> {

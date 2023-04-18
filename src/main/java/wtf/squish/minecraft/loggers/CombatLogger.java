@@ -1,5 +1,6 @@
 package wtf.squish.minecraft.loggers;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,6 +10,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import wtf.squish.minecraft.SquishLogs;
 import wtf.squish.minecraft.entities.Log;
 
 import java.util.HashMap;
@@ -18,28 +20,34 @@ import java.util.HashMap;
  * @author Livaco
  */
 public class CombatLogger implements Listener {
-    private final HashMap<EntityDamageEvent.DamageCause, String> causeStrings = new HashMap<>() {{
-        put(EntityDamageEvent.DamageCause.PROJECTILE, "died from a projectile.");
-        put(EntityDamageEvent.DamageCause.VOID, "fell into the void.");
-        put(EntityDamageEvent.DamageCause.LIGHTNING, "died from being struck by lightning.");
-        put(EntityDamageEvent.DamageCause.FALLING_BLOCK, "died from being squished by a block.");
-        put(EntityDamageEvent.DamageCause.DRAGON_BREATH, "died to dragons breath.");
-        put(EntityDamageEvent.DamageCause.FLY_INTO_WALL, "died by flying into a wall too fast.");
-        put(EntityDamageEvent.DamageCause.SONIC_BOOM, "died from a sonic boom.");
-        put(EntityDamageEvent.DamageCause.FALL, "died from fall damage.");
-        put(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION, "died to an explosion.");
-        put(EntityDamageEvent.DamageCause.FIRE, "burned to death.");
-        put(EntityDamageEvent.DamageCause.FIRE_TICK, "burned to death.");
-        put(EntityDamageEvent.DamageCause.LAVA, "swam in lava.");
-        put(EntityDamageEvent.DamageCause.HOT_FLOOR, "died to stepping on a hot floor.");
-        put(EntityDamageEvent.DamageCause.POISON, "died to poison.");
-        put(EntityDamageEvent.DamageCause.WITHER, "died from withering.");
-        put(EntityDamageEvent.DamageCause.CRAMMING, "died while being crammed.");
-        put(EntityDamageEvent.DamageCause.FREEZE, "froze to death.");
-        put(EntityDamageEvent.DamageCause.DROWNING, "drowned.");
-        put(EntityDamageEvent.DamageCause.STARVATION, "starved to death.");
-        put(EntityDamageEvent.DamageCause.SUICIDE, "committed suicide.");
-    }};
+    private final HashMap<EntityDamageEvent.DamageCause, String> causeStrings = new HashMap<>();
+    public CombatLogger() {
+        causeStrings.put(EntityDamageEvent.DamageCause.PROJECTILE, "died from a projectile.");
+        causeStrings.put(EntityDamageEvent.DamageCause.VOID, "fell into the void.");
+        causeStrings.put(EntityDamageEvent.DamageCause.LIGHTNING, "died from being struck by lightning.");
+        causeStrings.put(EntityDamageEvent.DamageCause.FALLING_BLOCK, "died from being squished by a block.");
+        causeStrings.put(EntityDamageEvent.DamageCause.DRAGON_BREATH, "died to dragons breath.");
+        causeStrings.put(EntityDamageEvent.DamageCause.FLY_INTO_WALL, "died by flying into a wall too fast.");
+        causeStrings.put(EntityDamageEvent.DamageCause.FALL, "died from fall damage.");
+        causeStrings.put(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION, "died to an explosion.");
+        causeStrings.put(EntityDamageEvent.DamageCause.FIRE, "burned to death.");
+        causeStrings.put(EntityDamageEvent.DamageCause.FIRE_TICK, "burned to death.");
+        causeStrings.put(EntityDamageEvent.DamageCause.LAVA, "swam in lava.");
+        causeStrings.put(EntityDamageEvent.DamageCause.HOT_FLOOR, "died to stepping on a hot floor.");
+        causeStrings.put(EntityDamageEvent.DamageCause.POISON, "died to poison.");
+        causeStrings.put(EntityDamageEvent.DamageCause.WITHER, "died from withering.");
+        causeStrings.put(EntityDamageEvent.DamageCause.CRAMMING, "died while being crammed.");
+        causeStrings.put(EntityDamageEvent.DamageCause.DROWNING, "drowned.");
+        causeStrings.put(EntityDamageEvent.DamageCause.STARVATION, "starved to death.");
+        causeStrings.put(EntityDamageEvent.DamageCause.SUICIDE, "committed suicide.");
+
+        if(SquishLogs.major > 1 || (SquishLogs.minor >= 19 && SquishLogs.major == 1)) {
+            causeStrings.put(EntityDamageEvent.DamageCause.SONIC_BOOM, "died from a sonic boom.");
+        }
+        if(SquishLogs.major > 1 || (SquishLogs.minor >= 17 && SquishLogs.major == 1)) {
+            causeStrings.put(EntityDamageEvent.DamageCause.FREEZE, "froze to death.");
+        }
+    }
 
     /**
      * Logs PVE deaths.
@@ -125,8 +133,10 @@ public class CombatLogger implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         // Thanks https://www.spigotmc.org/threads/get-the-mob-that-killed-a-player.508310/#post-4175020
         // Why this sorta logic isn't possible in onPlayerDeath or onEntityDeath is beyond me
-        if(!(event.getEntity() instanceof Player player)) return;
-        if(event.getDamager() instanceof Player damager) {
+        if(!(event.getEntity() instanceof Player)) return;
+        Player player = (Player) event.getEntity();
+        if(event.getDamager() instanceof Player) {
+            Player damager = (Player) event.getDamager();
             if(event.getFinalDamage() >= player.getHealth()) return; // Other logs will deal with this one
             new Log("Combat", "PvP")
                     .addFragment(player)
@@ -147,4 +157,7 @@ public class CombatLogger implements Listener {
                 .addFragment(".")
                 .send();
     }
+
+    // Below here is the version specific stuff
+
 }
