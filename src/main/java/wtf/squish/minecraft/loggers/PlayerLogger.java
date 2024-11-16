@@ -309,6 +309,7 @@ public class PlayerLogger implements Listener {
         if(event.isCancelled()) return;
         if(event.getInventory().getType() != InventoryType.CHEST) return;
         if(!(event.getPlayer() instanceof Player)) return;
+        if(event.getInventory().getLocation() == null) return; // Likely a plugin opening it
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
 
         new Log("Player", "Chest Open")
@@ -327,6 +328,7 @@ public class PlayerLogger implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         if(event.getInventory().getType() != InventoryType.CHEST) return;
         if(!(event.getPlayer() instanceof Player)) return;
+        if(event.getInventory().getLocation() == null) return; // Likely a plugin opening it
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
 
         new Log("Player", "Chest Close")
