@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="wtf.squish.minecraft.main:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/wtf_squish_minecraft_main_jar</output-path>
+    <root id="archive" name="wtf.squish.minecraft.main.jar">
+      <element id="module-output" name="wtf.squish.minecraft.main" />
+      <element id="file-copy" path="/hdd/Repositories/Core/SquishNew/minecraft/src/main/resources/plugin.yml" />
+    </root>
+  </artifact>
+</component>
