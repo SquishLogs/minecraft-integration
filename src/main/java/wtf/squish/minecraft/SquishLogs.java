@@ -6,11 +6,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SquishLogs extends JavaPlugin {
     private static SquishLogs instance;
+    private static int minecraftMajor;
+    private static int minecraftMinor;
 
     @Override
     public void onEnable() {
         log("Loading SquishLogs...");
         instance = this;
+
+        // Start figuring out the version stuff
+        String version = Bukkit.getBukkitVersion().split("-")[0];
+        String[] splitVersion = version.split("([.])");
+        this.minecraftMajor = Integer.parseInt(splitVersion[0]);
+        this.minecraftMinor = Integer.parseInt(splitVersion[1]);
+        log("Detected minecraft version " + this.minecraftMajor + "." + this.minecraftMinor);
     }
 
     /**
