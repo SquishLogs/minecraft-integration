@@ -17,9 +17,9 @@ public class SquishLogs extends JavaPlugin {
         // Start figuring out the version stuff
         String version = Bukkit.getBukkitVersion().split("-")[0];
         String[] splitVersion = version.split("([.])");
-        this.minecraftMajor = Integer.parseInt(splitVersion[0]);
-        this.minecraftMinor = Integer.parseInt(splitVersion[1]);
-        log("Detected minecraft version " + this.minecraftMajor + "." + this.minecraftMinor);
+        minecraftMajor = Integer.parseInt(splitVersion[0]);
+        minecraftMinor = Integer.parseInt(splitVersion[1]);
+        log("Detected minecraft version " + minecraftMajor + "." + minecraftMinor);
     }
 
     /**
