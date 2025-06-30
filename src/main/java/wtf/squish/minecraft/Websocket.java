@@ -9,6 +9,7 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Websocket extends WebSocketClient {
@@ -18,6 +19,7 @@ public class Websocket extends WebSocketClient {
     private final Gson gson = new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .create();
+    private final ArrayList<String> messageBacklog = new ArrayList<>();
 
     protected Websocket(URI serverUri) {
         super(serverUri);
@@ -59,6 +61,14 @@ public class Websocket extends WebSocketClient {
                 }
 
                 SquishLogs.log("Authentication successful.");
+
+                if(!this.messageBacklog.isEmpty()) {
+                    SquishLogs.log("Clearing " + this.messageBacklog.toArray().length + " messages in the backlog.");
+                    for(String json : this.messageBacklog) {
+                        this.send(json);
+                    }
+                    this.messageBacklog.clear();
+                }
             }
         }
     }
@@ -97,7 +107,11 @@ public class Websocket extends WebSocketClient {
         data.put("log", logBuilder.getFragments());
 
         String jsonLog = this.gson.toJson(data);
-        this.send(jsonLog);
+        if(!this.isOpen()) {
+            this.messageBacklog.add(jsonLog);
+        } else {
+            this.send(jsonLog);
+        }
     }
     protected void registerPlayer(Player player) {
         HashMap<String, Object> playerInfo = new HashMap<>();
@@ -108,8 +122,13 @@ public class Websocket extends WebSocketClient {
         data.put("player", playerInfo);
 
         String jsonPlayer = gson.toJson(data);
-        this.send(jsonPlayer);
-        SquishLogs.log("Registering new player " + player.getName() + " (" + player.getUniqueId() + ")");
+        if(!this.isOpen()) {
+            SquishLogs.log("Player registration for " + player.getName() + " (" + player.getUniqueId() + ") delayed until socket re-connected.");
+            this.messageBacklog.add(jsonPlayer);
+        } else {
+            SquishLogs.log("Registering new player " + player.getName() + " (" + player.getUniqueId() + ")");
+            this.send(jsonPlayer);
+        }
     }
 
     private static class WebsocketMessage {
