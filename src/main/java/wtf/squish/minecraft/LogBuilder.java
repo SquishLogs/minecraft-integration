@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,6 +53,11 @@ public class LogBuilder {
                 .setData("text", formatLocation(location)));
     }
 
+    public LogBuilder withMetadata(String title, String value) {
+        this.fragments.get(this.fragments.toArray().length - 1).addMeta(title, value);
+        return this;
+    }
+
     public void send() {
         SquishLogs.websocket.sendLog(this);
     }
@@ -72,13 +78,24 @@ public class LogBuilder {
         private final HashMap<String, Object> data = new HashMap<>();
 
         public Fragment(FragmentType type) {
+            this.data.put("meta", new ArrayList<FragmentMeta>());
             this.type = type;
         }
 
         public Fragment setData(String key, Object val) {
+            if(key.equals("meta")) {
+                // dumbass trying to break the plugin
+                SquishLogs.log("Warning: Fragment data key 'meta' is reserved.");
+                return this;
+            }
             if(val instanceof Color)
                 val = formatFragmentColor((Color) val);
             this.data.put(key, val);
+            return this;
+        }
+        @SuppressWarnings("unchecked") // suppressed cus its guaranteed to be
+        public Fragment addMeta(String title, String text) {
+            ((ArrayList<FragmentMeta>) this.data.get("meta")).add(new FragmentMeta(title, text));
             return this;
         }
 
@@ -93,6 +110,23 @@ public class LogBuilder {
             Player,
             @SerializedName("text")
             Text
+        }
+
+        public static class FragmentMeta {
+            private String title;
+            private String text;
+
+            public FragmentMeta(String title, String text) {
+                this.title = title;
+                this.text = text;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+            public String getText() {
+                return text;
+            }
         }
     }
 }
