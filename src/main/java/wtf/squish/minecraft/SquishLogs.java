@@ -7,13 +7,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.lang.reflect.Field;
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.time.Duration;
 
 public class SquishLogs extends JavaPlugin {
     public static SquishConfig config;
     public static SquishServerInformation serverInformation;
+    public static Websocket websocket;
 
     private static final FixGsonBoolean gsonBooleanAdapter = new FixGsonBoolean();
     public static final Gson gson = new GsonBuilder()
@@ -21,6 +22,7 @@ public class SquishLogs extends JavaPlugin {
             .registerTypeAdapter(Boolean.class, gsonBooleanAdapter)
             .registerTypeAdapter(boolean.class, gsonBooleanAdapter)
             .create();
+
 
     private static SquishLogs instance;
     private static int minecraftMajor;
@@ -54,11 +56,15 @@ public class SquishLogs extends JavaPlugin {
             log("Squish Logs will not continue further.");
             return;
         }
-        if(serverInformation.getServerType() != "Minecraft") {
+        if(!serverInformation.getServerType().equals("Minecraft")) {
             log("Error: This configuration is not bound to a Minecraft server! Did you download the integration correctly?");
             log("Squish Logs will not continue further.");
             return;
         }
+
+        // Connect to the websocket
+        websocket = new Websocket(URI.create(serverInformation.getSocket().getIpAddress()));
+        websocket.connect();
     }
 
     /**
