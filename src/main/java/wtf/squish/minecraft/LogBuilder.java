@@ -65,15 +65,15 @@ public class LogBuilder {
         }
 
         public Fragment setData(String key, Object val) {
-            if(val instanceof Color) {
+            if(val instanceof Color)
                 val = formatFragmentColor((Color) val);
-            }
             this.data.put(key, val);
             return this;
         }
 
         private static String formatFragmentColor(Color color) {
-            if(color == null) return null;
+            if(color == null)
+                return null;
             return color.getRed() + "," + color.getGreen() + "," + color.getBlue();
         }
 

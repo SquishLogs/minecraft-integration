@@ -64,9 +64,8 @@ public class Websocket extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        if(this.terminated) {
+        if(this.terminated)
             return;
-        }
 
         // Reconnection
         if(this.reconnectionAttempts > 3) {

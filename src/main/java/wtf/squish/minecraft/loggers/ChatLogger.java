@@ -9,9 +9,8 @@ import wtf.squish.minecraft.SquishLogs;
 public class ChatLogger implements Listener {
     @EventHandler
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
-        if(event.isCancelled()) {
+        if(event.isCancelled())
             return;
-        }
 
         new LogBuilder()
                 .setCategory("Chat")
