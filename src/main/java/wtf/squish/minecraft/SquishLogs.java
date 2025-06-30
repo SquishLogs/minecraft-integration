@@ -16,14 +16,6 @@ public class SquishLogs extends JavaPlugin {
     public static SquishServerInformation serverInformation;
     public static Websocket websocket;
 
-    private static final FixGsonBoolean gsonBooleanAdapter = new FixGsonBoolean();
-    public static final Gson gson = new GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .registerTypeAdapter(Boolean.class, gsonBooleanAdapter)
-            .registerTypeAdapter(boolean.class, gsonBooleanAdapter)
-            .create();
-
-
     private static SquishLogs instance;
     private static int minecraftMajor;
     private static int minecraftMinor;

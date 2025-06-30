@@ -22,6 +22,13 @@ public class SquishServerInformation {
     private String discordWebhook;
     private SquishWebsocketInformation socket;
 
+    private static final FixGsonBoolean gsonBooleanAdapter = new FixGsonBoolean();
+    private static final Gson gson = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .registerTypeAdapter(Boolean.class, gsonBooleanAdapter)
+            .registerTypeAdapter(boolean.class, gsonBooleanAdapter)
+            .create();
+
     public static SquishServerInformation getFromRemote() {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -46,7 +53,7 @@ public class SquishServerInformation {
         }
 
         // Parse the JSON it gave us
-        return SquishLogs.gson.fromJson(responseBody, SquishServerInformation.class);
+        return gson.fromJson(responseBody, SquishServerInformation.class);
     }
 
     public int getId() {
