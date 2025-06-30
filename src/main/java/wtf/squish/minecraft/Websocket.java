@@ -18,7 +18,7 @@ public class Websocket extends WebSocketClient {
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .create();
 
-    public Websocket(URI serverUri) {
+    protected Websocket(URI serverUri) {
         super(serverUri);
     }
 
@@ -84,12 +84,12 @@ public class Websocket extends WebSocketClient {
         e.printStackTrace();
     }
 
-    public void terminateConnection() {
+    protected void terminateConnection() {
         this.terminated = true;
         this.close();
     }
 
-    public void sendLog(LogBuilder logBuilder) {
+    protected void sendLog(LogBuilder logBuilder) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("type", "log");
         data.put("category", logBuilder.getCategory());

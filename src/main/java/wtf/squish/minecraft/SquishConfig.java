@@ -7,20 +7,20 @@ public class SquishConfig {
     private final String domain;
     private final String token;
 
-    public SquishConfig(SquishLogs instance) {
+    protected SquishConfig(SquishLogs instance) {
         FileConfiguration config = instance.getConfig();
         this.community = config.getString("community");
         this.domain = config.getString("domain");
         this.token = config.getString("token");
     }
 
-    public String getCommunity() {
+    protected String getCommunity() {
         return this.community;
     }
-    public String getDomain() {
+    protected String getDomain() {
         return this.domain;
     }
-    public String getToken() {
+    protected String getToken() {
         return this.token;
     }
 }

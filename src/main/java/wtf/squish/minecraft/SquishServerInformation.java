@@ -29,7 +29,7 @@ public class SquishServerInformation {
             .registerTypeAdapter(boolean.class, gsonBooleanAdapter)
             .create();
 
-    public static SquishServerInformation getFromRemote() {
+    protected static SquishServerInformation getFromRemote() {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
                 .uri(URI.create(SquishLogs.getSquishConfig().getDomain() + "/api/v1/server"))
@@ -56,50 +56,50 @@ public class SquishServerInformation {
         return gson.fromJson(responseBody, SquishServerInformation.class);
     }
 
-    public int getId() {
+    protected int getId() {
         return id;
     }
-    public String getName() {
+    protected String getName() {
         return name;
     }
-    public String getRegionId() {
+    protected String getRegionId() {
         return regionId;
     }
-    public String getIpAddress() {
+    protected String getIpAddress() {
         return ipAddress;
     }
-    public String getServerType() {
+    protected String getServerType() {
         return serverType;
     }
-    public String getColor() {
+    protected String getColor() {
         return color;
     }
-    public boolean getLogErrors() {
+    protected boolean getLogErrors() {
         return logErrors;
     }
-    public String getDiscordWebhook() {
+    protected String getDiscordWebhook() {
         return discordWebhook;
     }
-    public SquishWebsocketInformation getSocket() {
+    protected SquishWebsocketInformation getSocket() {
         return socket;
     }
 
-    public static class SquishWebsocketInformation {
+    protected static class SquishWebsocketInformation {
         private String uid;
         private String name;
         private String ipAddress;
         private String continent;
 
-        public String getUid() {
+        protected String getUid() {
             return uid;
         }
-        public String getName() {
+        protected String getName() {
             return name;
         }
-        public String getIpAddress() {
+        protected String getIpAddress() {
             return ipAddress;
         }
-        public String getContinent() {
+        protected String getContinent() {
             return continent;
         }
     }

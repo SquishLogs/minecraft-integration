@@ -69,14 +69,14 @@ public class SquishLogs extends JavaPlugin {
      * Logs a message to the console in the SquishLogs styling.
      * @param message The message to log.
      */
-    public static void log(String message) {
+    protected static void log(String message) {
         Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "SquishLogs >> " + ChatColor.WHITE + message);
     }
 
-    public static SquishConfig getSquishConfig() {
+    protected static SquishConfig getSquishConfig() {
         return config;
     }
-    public static HttpClient getHttpClient() {
+    protected static HttpClient getHttpClient() {
         return httpClient;
     }
 }
