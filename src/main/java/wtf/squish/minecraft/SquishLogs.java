@@ -1,14 +1,34 @@
 package wtf.squish.minecraft;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Field;
+import java.net.http.HttpClient;
+import java.time.Duration;
+
 public class SquishLogs extends JavaPlugin {
+    public static SquishConfig config;
+    public static SquishServerInformation serverInformation;
+
+    private static final FixGsonBoolean gsonBooleanAdapter = new FixGsonBoolean();
+    public static final Gson gson = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .registerTypeAdapter(Boolean.class, gsonBooleanAdapter)
+            .registerTypeAdapter(boolean.class, gsonBooleanAdapter)
+            .create();
+
     private static SquishLogs instance;
-    private static SquishConfig config;
     private static int minecraftMajor;
     private static int minecraftMinor;
+    private static final HttpClient httpClient = HttpClient.newBuilder()
+            .version(HttpClient.Version.HTTP_2)
+            .connectTimeout(Duration.ofSeconds(5))
+            .build();
 
     @Override
     public void onEnable() {
@@ -24,7 +44,12 @@ public class SquishLogs extends JavaPlugin {
         // Read the config file
         this.saveDefaultConfig();
         config = new SquishConfig(this);
-        log(config.getCommunity() + " (" + config.getDomain() + ") for Minecraft version " + minecraftMajor + "." + minecraftMinor);
+
+        // Fetch the remote information about the server
+        serverInformation = SquishServerInformation.getFromRemote();
+        log(serverInformation.getName() + " (" + config.getDomain() + ") [" + serverInformation.getIpAddress() + "] using minecraft " + minecraftMajor + "." + minecraftMinor);
+
+        
     }
 
     /**
@@ -33,5 +58,12 @@ public class SquishLogs extends JavaPlugin {
      */
     public static void log(String message) {
         Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "SquishLogs >> " + ChatColor.WHITE + message);
+    }
+
+    public static SquishConfig getSquishConfig() {
+        return config;
+    }
+    public static HttpClient getHttpClient() {
+        return httpClient;
     }
 }
