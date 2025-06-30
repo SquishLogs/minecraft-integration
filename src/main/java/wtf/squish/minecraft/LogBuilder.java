@@ -3,7 +3,9 @@ package wtf.squish.minecraft;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import org.bukkit.Location;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -39,6 +41,15 @@ public class LogBuilder {
                 .setData("health", player.getHealth())
                 .setData("hunger", player.getFoodLevel())
                 .setData("location", formatLocation(player.getLocation())));
+    }
+    public LogBuilder addLocationFragment(Location location, Color highlightColor) {
+        return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
+                .setData("text", formatLocation(location))
+                .setData("color", highlightColor));
+    }
+    public LogBuilder addLocationFragment(Location location) {
+        return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
+                .setData("text", formatLocation(location)));
     }
 
     public void send() {
