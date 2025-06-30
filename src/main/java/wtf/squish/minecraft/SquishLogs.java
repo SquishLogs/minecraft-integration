@@ -49,7 +49,16 @@ public class SquishLogs extends JavaPlugin {
         serverInformation = SquishServerInformation.getFromRemote();
         log(serverInformation.getName() + " (" + config.getDomain() + ") [" + serverInformation.getIpAddress() + "] using minecraft " + minecraftMajor + "." + minecraftMinor);
 
-        
+        if(serverInformation == null || config == null) {
+            log("Error: Failed to find all the required information about this server.");
+            log("Squish Logs will not continue further.");
+            return;
+        }
+        if(serverInformation.getServerType() != "Minecraft") {
+            log("Error: This configuration is not bound to a Minecraft server! Did you download the integration correctly?");
+            log("Squish Logs will not continue further.");
+            return;
+        }
     }
 
     /**
