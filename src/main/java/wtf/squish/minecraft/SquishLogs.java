@@ -6,7 +6,9 @@ import com.google.gson.GsonBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import wtf.squish.minecraft.loggers.ChatLogger;
 
+import java.awt.*;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.time.Duration;
@@ -15,6 +17,7 @@ public class SquishLogs extends JavaPlugin {
     public static SquishConfig config;
     public static SquishServerInformation serverInformation;
     public static Websocket websocket;
+    public static Color highlightColor = new Color(29, 97, 129);
 
     private static SquishLogs instance;
     private static int minecraftMajor;
@@ -53,6 +56,9 @@ public class SquishLogs extends JavaPlugin {
             log("Squish Logs will not continue further.");
             return;
         }
+
+        // Register our loggers
+        getServer().getPluginManager().registerEvents(new ChatLogger(), this);
 
         // Connect to the websocket
         websocket = new Websocket(URI.create(serverInformation.getSocket().getIpAddress()));

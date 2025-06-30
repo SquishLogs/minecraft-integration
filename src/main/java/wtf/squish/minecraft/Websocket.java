@@ -90,6 +90,17 @@ public class Websocket extends WebSocketClient {
         this.close();
     }
 
+    public void sendLog(LogBuilder logBuilder) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("type", "log");
+        data.put("category", logBuilder.getCategory());
+        data.put("log", logBuilder.getFragments());
+
+        String jsonLog = this.gson.toJson(data);
+        this.send(jsonLog);
+        SquishLogs.log(jsonLog);
+    }
+
     private static class WebsocketMessage {
         private MessageType type;
         private boolean success;
