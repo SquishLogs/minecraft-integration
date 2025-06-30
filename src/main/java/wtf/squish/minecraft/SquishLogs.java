@@ -1,12 +1,11 @@
 package wtf.squish.minecraft;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import wtf.squish.minecraft.loggers.ChatLogger;
+import wtf.squish.minecraft.loggers.PlayerListener;
 
 import java.awt.*;
 import java.net.URI;
@@ -59,6 +58,7 @@ public class SquishLogs extends JavaPlugin {
 
         // Register our loggers
         getServer().getPluginManager().registerEvents(new ChatLogger(), this);
+        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
         // Connect to the websocket
         websocket = new Websocket(URI.create(serverInformation.getSocket().getIpAddress()));
@@ -78,5 +78,9 @@ public class SquishLogs extends JavaPlugin {
     }
     protected static HttpClient getHttpClient() {
         return httpClient;
+    }
+
+    public static void registerPlayer(Player player) {
+        websocket.registerPlayer(player);
     }
 }

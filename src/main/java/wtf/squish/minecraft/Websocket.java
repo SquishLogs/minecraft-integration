@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
+import org.bukkit.entity.Player;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -97,7 +98,18 @@ public class Websocket extends WebSocketClient {
 
         String jsonLog = this.gson.toJson(data);
         this.send(jsonLog);
-        SquishLogs.log(jsonLog);
+    }
+    protected void registerPlayer(Player player) {
+        HashMap<String, Object> playerInfo = new HashMap<>();
+        playerInfo.put("name", player.getName());
+        playerInfo.put("platform_id", player.getUniqueId().toString());
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("type", "player");
+        data.put("player", playerInfo);
+
+        String jsonPlayer = gson.toJson(data);
+        this.send(jsonPlayer);
+        SquishLogs.log("Registering new player " + player.getName() + " (" + player.getUniqueId() + ")");
     }
 
     private static class WebsocketMessage {
