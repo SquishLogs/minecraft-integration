@@ -10,7 +10,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import wtf.squish.minecraft.LogBuilder;
+import wtf.squish.minecraft.GameLog;
 import wtf.squish.minecraft.SquishLogs;
 
 import java.util.HashMap;
@@ -64,7 +64,7 @@ public class CombatLogger implements Listener {
 
         ItemStack item = event.getEntity().getKiller().getInventory().getItemInMainHand();
         if(item.getType() == Material.AIR) {
-            new LogBuilder()
+            new GameLog()
                     .setCategory("Combat | Entity Death")
                     .addPlayerFragment(event.getEntity().getKiller())
                     .addTextFragment(" killed a ")
@@ -74,7 +74,7 @@ public class CombatLogger implements Listener {
             return;
         }
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("Combat | Entity Death")
                 .addPlayerFragment(event.getEntity().getKiller())
                 .addTextFragment(" killed a ")
@@ -95,7 +95,7 @@ public class CombatLogger implements Listener {
             if(cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK
                     && cause != EntityDamageEvent.DamageCause.ENTITY_EXPLOSION
                     && cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
-                new LogBuilder()
+                new GameLog()
                         .setCategory("Combat | Death")
                         .addPlayerFragment(player)
                         .addTextFragment(" ")
@@ -109,7 +109,7 @@ public class CombatLogger implements Listener {
 
         ItemStack item = killer.getInventory().getItemInMainHand();
         if(item.getType() == Material.AIR) {
-            new LogBuilder()
+            new GameLog()
                     .setCategory("Combat | PvP")
                     .addPlayerFragment(killer)
                     .addTextFragment(" killed ")
@@ -118,7 +118,7 @@ public class CombatLogger implements Listener {
                     .send();
             return;
         }
-        new LogBuilder()
+        new GameLog()
                 .setCategory("Combat | PvP")
                 .addPlayerFragment(killer)
                 .addTextFragment(" killed ")
@@ -138,7 +138,7 @@ public class CombatLogger implements Listener {
             if(event.getFinalDamage() >= player.getHealth())
                 return; // Other logs will deal with this one
 
-            new LogBuilder()
+            new GameLog()
                     .setCategory("Combat | PvP")
                     .addPlayerFragment(player)
                     .addTextFragment(" was damaged by ")
@@ -155,7 +155,7 @@ public class CombatLogger implements Listener {
         if(event.getFinalDamage() < player.getHealth())
             return;
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("Combat | PvP")
                 .addPlayerFragment(player)
                 .addTextFragment(" was killed by a ")

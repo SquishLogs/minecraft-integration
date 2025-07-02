@@ -11,7 +11,7 @@ import org.bukkit.event.raid.RaidFinishEvent;
 import org.bukkit.event.raid.RaidStopEvent;
 import org.bukkit.event.raid.RaidTriggerEvent;
 import org.bukkit.inventory.ItemStack;
-import wtf.squish.minecraft.LogBuilder;
+import wtf.squish.minecraft.GameLog;
 import wtf.squish.minecraft.SquishLogs;
 
 public class WorldLogger implements Listener {
@@ -20,7 +20,7 @@ public class WorldLogger implements Listener {
         if(event.isCancelled())
             return;
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("World | Raid")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" triggered a raid at ")
@@ -31,7 +31,7 @@ public class WorldLogger implements Listener {
 
     @EventHandler
     public void onRaidFinish(RaidFinishEvent event) {
-        new LogBuilder()
+        new GameLog()
                 .setCategory("World | Raid")
                 .addTextFragment("Raid at ")
                 .addLocationFragment(event.getRaid().getLocation(), SquishLogs.highlightColor)
@@ -42,7 +42,7 @@ public class WorldLogger implements Listener {
 
     @EventHandler
     public void onRaidStop(RaidStopEvent event) {
-        new LogBuilder()
+        new GameLog()
                 .setCategory("World | Raid")
                 .addTextFragment("Raid at ")
                 .addLocationFragment(event.getRaid().getLocation(), SquishLogs.highlightColor)
@@ -64,7 +64,7 @@ public class WorldLogger implements Listener {
         if(name == null)
             name = event.getRightClicked().getName();
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("World | Mob Renamed")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" renamed ")
@@ -81,7 +81,7 @@ public class WorldLogger implements Listener {
         if(event.getBlockPlaced().getType() != Material.FIRE)
             return;
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("World | Fire")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" lit a fire at ")
@@ -103,7 +103,7 @@ public class WorldLogger implements Listener {
             && type != EntityType.SKELETON_HORSE)
             return;
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("World | Boss")
                 .addTextFragment("A ")
                 .addTextFragment(event.getEntityType().name(), SquishLogs.highlightColor)
@@ -112,4 +112,3 @@ public class WorldLogger implements Listener {
                 .send();
     }
 }
-Er

@@ -100,7 +100,7 @@ public class Websocket extends WebSocketClient {
         this.close();
     }
 
-    protected void sendLog(LogBuilder logBuilder) {
+    protected void sendLog(GameLog logBuilder) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("type", "log");
         data.put("category", logBuilder.getCategory());

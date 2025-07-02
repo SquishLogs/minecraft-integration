@@ -4,7 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import wtf.squish.minecraft.LogBuilder;
+import wtf.squish.minecraft.GameLog;
 import wtf.squish.minecraft.SquishLogs;
 
 public class ChatLogger implements Listener {
@@ -13,7 +13,7 @@ public class ChatLogger implements Listener {
         if(event.isCancelled())
             return;
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("Chat | Message")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" said ")
@@ -27,7 +27,7 @@ public class ChatLogger implements Listener {
         if(event.isCancelled())
             return;
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("Chat | Command")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" ran command ")

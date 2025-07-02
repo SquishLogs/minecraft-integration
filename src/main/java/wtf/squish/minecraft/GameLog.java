@@ -12,29 +12,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LogBuilder {
+public class GameLog {
     private String category = "Unknown Category";
     private final ArrayList<Fragment> fragments = new ArrayList<>();
 
-    public LogBuilder setCategory(String category) {
+    public GameLog setCategory(String category) {
         this.category = category;
         return this;
     }
 
-    public LogBuilder addRawFragment(Fragment fragment) {
+    public GameLog addRawFragment(Fragment fragment) {
         this.fragments.add(fragment);
         return this;
     }
-    public LogBuilder addTextFragment(String text, Color highlightColor) {
+    public GameLog addTextFragment(String text, Color highlightColor) {
         return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
                 .setData("text", text)
                 .setData("color", highlightColor));
     }
-    public LogBuilder addTextFragment(String text) {
+    public GameLog addTextFragment(String text) {
         return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
                 .setData("text", text));
     }
-    public LogBuilder addPlayerFragment(Player player) {
+    public GameLog addPlayerFragment(Player player) {
         return this.addRawFragment(new Fragment(Fragment.FragmentType.Player)
                 .setData("name", player.getName())
                 .setData("platform_name", player.getName())
@@ -43,17 +43,17 @@ public class LogBuilder {
                 .setData("hunger", player.getFoodLevel())
                 .setData("location", formatLocation(player.getLocation())));
     }
-    public LogBuilder addLocationFragment(Location location, Color highlightColor) {
+    public GameLog addLocationFragment(Location location, Color highlightColor) {
         return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
                 .setData("text", formatLocation(location))
                 .setData("color", highlightColor));
     }
-    public LogBuilder addLocationFragment(Location location) {
+    public GameLog addLocationFragment(Location location) {
         return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
                 .setData("text", formatLocation(location)));
     }
 
-    public LogBuilder addItemFragment(ItemStack item, Color highlightColor) {
+    public GameLog addItemFragment(ItemStack item, Color highlightColor) {
         String itemName = item.getType().name();
         ItemMeta meta = item.getItemMeta();
         if(meta != null) {
@@ -78,11 +78,11 @@ public class LogBuilder {
                 .withMetadata("Amount", String.valueOf(item.getAmount()))
                 .withMetadata("Enchantments", enchantments.toString());
     }
-    public LogBuilder addItemFragment(ItemStack item) {
+    public GameLog addItemFragment(ItemStack item) {
         return this.addItemFragment(item, null);
     }
 
-    public LogBuilder withMetadata(String title, String value) {
+    public GameLog withMetadata(String title, String value) {
         this.fragments.get(this.fragments.toArray().length - 1).addMeta(title, value);
         return this;
     }

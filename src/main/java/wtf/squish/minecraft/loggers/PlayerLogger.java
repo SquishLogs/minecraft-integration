@@ -8,7 +8,7 @@ import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
-import wtf.squish.minecraft.LogBuilder;
+import wtf.squish.minecraft.GameLog;
 import wtf.squish.minecraft.SquishLogs;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class PlayerLogger implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         SquishLogs.registerPlayer(event.getPlayer());
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("Player | Connect")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" joined the game.")
@@ -30,7 +30,7 @@ public class PlayerLogger implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        new LogBuilder()
+        new GameLog()
                 .setCategory("Player | Disconnect")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" left the game.")
@@ -45,7 +45,7 @@ public class PlayerLogger implements Listener {
             // This can sometimes happen with TPS lagspikes
             return;
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("Player | Teleport")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" teleported from ")
@@ -61,7 +61,7 @@ public class PlayerLogger implements Listener {
         if(event.isCancelled())
             return;
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("Player | Gamemode")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" had their gamemode changed to ")
@@ -86,7 +86,7 @@ public class PlayerLogger implements Listener {
             return;
 
         if(event.getCurrentItem() != null) {
-            new LogBuilder()
+            new GameLog()
                     .setCategory("Player | Villager Trade")
                     .addPlayerFragment(player)
                     .addTextFragment(" traded with a villager receiving ")
@@ -94,7 +94,7 @@ public class PlayerLogger implements Listener {
                     .addTextFragment(".")
                     .send();
         } else {
-            new LogBuilder()
+            new GameLog()
                     .setCategory("Player | Villager Trade")
                     .addPlayerFragment(player)
                     .addTextFragment(" traded with a villager to get an unknown item.")
@@ -116,7 +116,7 @@ public class PlayerLogger implements Listener {
             description = event.getAdvancement().getDisplay().getDescription();
         }
 
-        new LogBuilder()
+        new GameLog()
                 .setCategory("Player | Advancement")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" earned the advancement ")
@@ -134,7 +134,7 @@ public class PlayerLogger implements Listener {
         switch(event.getAction()) {
             case ADDED, CHANGED -> {
                 if(event.getNewEffect() == null) return;
-                new LogBuilder()
+                new GameLog()
                         .setCategory("Player | Potion")
                         .addPlayerFragment(player)
                         .addTextFragment(" was given the effect of ")
@@ -161,7 +161,7 @@ public class PlayerLogger implements Listener {
                     }
                 }, 1);
 
-                new LogBuilder()
+                new GameLog()
                         .setCategory("Player | Potion")
                         .addPlayerFragment(player)
                         .addTextFragment(" had their effects cleared.")
@@ -169,7 +169,7 @@ public class PlayerLogger implements Listener {
             }
             case REMOVED -> {
                 if(event.getOldEffect() == null) return;
-                new LogBuilder()
+                new GameLog()
                         .setCategory("Player | Potion")
                         .addPlayerFragment(player)
                         .addTextFragment(" had their ")
