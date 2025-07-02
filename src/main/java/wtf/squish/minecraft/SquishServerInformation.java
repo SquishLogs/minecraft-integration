@@ -33,7 +33,7 @@ public class SquishServerInformation {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
                 .uri(URI.create(SquishLogs.getSquishConfig().getDomain() + "/api/v1/server"))
-                .setHeader("User-Agent", "SquishLogsMinecraft/2.0.0 (+https://squish.wtf/)")
+                .setHeader("User-Agent", SquishLogs.getInstance().getHttpUserAgent())
                 .setHeader("X-Game-Server-Token", SquishLogs.getSquishConfig().getToken())
                 .build();
 

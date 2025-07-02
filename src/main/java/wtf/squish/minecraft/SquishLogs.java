@@ -3,6 +3,7 @@ package wtf.squish.minecraft;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import wtf.squish.minecraft.loggers.*;
 
@@ -24,6 +25,7 @@ public class SquishLogs extends JavaPlugin {
             .version(HttpClient.Version.HTTP_2)
             .connectTimeout(Duration.ofSeconds(5))
             .build();
+    private String httpUserAgent = "SquishLogsMinecraft/" + this.getDescription().getVersion() + " (+https://squish.wtf/)";
 
     @Override
     public void onEnable() {
@@ -55,6 +57,11 @@ public class SquishLogs extends JavaPlugin {
             return;
         }
 
+        if(serverInformation.getLogErrors()) {
+            Bukkit.getLogger().addHandler(new ErrorLogger());
+            SquishLogs.log("Error logging enabled.");
+        }
+
         // Register our loggers
         getServer().getPluginManager().registerEvents(new ChatLogger(), this);
         getServer().getPluginManager().registerEvents(new CombatLogger(), this);
@@ -80,6 +87,9 @@ public class SquishLogs extends JavaPlugin {
     }
     protected static HttpClient getHttpClient() {
         return httpClient;
+    }
+    protected String getHttpUserAgent() {
+        return httpUserAgent;
     }
     public static SquishLogs getInstance() {
         return SquishLogs.instance;
