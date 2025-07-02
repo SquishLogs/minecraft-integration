@@ -74,6 +74,12 @@ public class SquishLogs extends JavaPlugin {
         websocket.connect();
     }
 
+    @Override
+    public void onDisable() {
+        log("Disconnecting websocket...");
+        websocket.terminateConnection();
+    }
+
     /**
      * Logs a message to the console in the SquishLogs styling.
      * @param message The message to log.
