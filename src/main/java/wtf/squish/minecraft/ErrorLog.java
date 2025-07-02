@@ -83,7 +83,7 @@ public class ErrorLog {
         CRC32 crc = new CRC32();
         crc.update((error + stack).getBytes());
         params.append(formatSingleGetParamater("hash", String.valueOf(crc.getValue())));
-        SquishLogs.log(String.valueOf(crc.getValue()));
+        SquishLogs.log("Error hashed as " + crc.getValue());
         params.append("&");
 
         params.append(formatSingleGetParamater("gmv", SquishLogs.getInstance().getServer().getVersion()
