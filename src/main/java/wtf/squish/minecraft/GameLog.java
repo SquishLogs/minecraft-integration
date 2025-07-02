@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,6 +93,41 @@ public class GameLog {
 
     public void send() {
         SquishLogs.websocket.sendLog(this);
+
+        if(SquishLogs.serverInformation.getDiscordWebhook() != null) {
+            this.sendToDiscord();
+        }
+    }
+
+    private void sendToDiscord() {
+        DiscordWebhook webhook = new DiscordWebhook(SquishLogs.serverInformation.getDiscordWebhook());
+        DiscordWebhook.EmbedObject embed = new DiscordWebhook.EmbedObject();
+        embed.setTitle(this.category);
+        embed.setColor(Color.decode(SquishLogs.serverInformation.getColor()));
+        embed.setFooter("Powered by SquishLogs", "");
+
+        StringBuilder description = new StringBuilder();
+        for(Fragment frag : this.fragments) {
+            switch(frag.type) {
+                case Text -> description.append(frag.data.get("text"));
+                case Player -> {
+                    description.append(frag.data.get("name"));
+                    embed.addField(frag.data.get("name").toString(),
+                            "Health: " + frag.data.get("health")
+                                    + " | Hunger: " + frag.data.get("hunger")
+                                    + " | Location: " + frag.data.get("location"),
+                            false);
+                }
+            }
+        }
+        embed.setDescription(description.toString());
+        webhook.addEmbed(embed);
+        try {
+            webhook.execute();
+        } catch(IOException e) {
+            SquishLogs.log("Error: Failed to send discord webhook:");
+            e.printStackTrace();
+        }
     }
 
     public String getCategory() {

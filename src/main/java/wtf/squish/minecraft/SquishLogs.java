@@ -25,7 +25,7 @@ public class SquishLogs extends JavaPlugin {
             .version(HttpClient.Version.HTTP_2)
             .connectTimeout(Duration.ofSeconds(5))
             .build();
-    private String httpUserAgent = "SquishLogsMinecraft/" + this.getDescription().getVersion() + " (+https://squish.wtf/)";
+    private final String httpUserAgent = "SquishLogsMinecraft/" + this.getDescription().getVersion() + " (+https://squish.wtf/)";
 
     @Override
     public void onEnable() {
