@@ -11,7 +11,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.GameLog;
-import wtf.squish.minecraft.SquishLogs;
 
 import java.util.HashMap;
 
@@ -68,7 +67,7 @@ public class CombatLogger implements Listener {
                     .setCategory("Combat | Entity Death")
                     .addPlayerFragment(event.getEntity().getKiller())
                     .addTextFragment(" killed a ")
-                    .addTextFragment(event.getEntity().getType().name().toLowerCase(), SquishLogs.highlightColor)
+                    .addTextFragment(event.getEntity().getType().name().toLowerCase(), true)
                     .addTextFragment(" with their hands.")
                     .send();
             return;
@@ -78,9 +77,9 @@ public class CombatLogger implements Listener {
                 .setCategory("Combat | Entity Death")
                 .addPlayerFragment(event.getEntity().getKiller())
                 .addTextFragment(" killed a ")
-                .addTextFragment(event.getEntity().getType().name().toLowerCase(), SquishLogs.highlightColor)
+                .addTextFragment(event.getEntity().getType().name().toLowerCase(), true)
                 .addTextFragment(" with ")
-                .addItemFragment(item, SquishLogs.highlightColor)
+                .addItemFragment(item, true)
                 .addTextFragment(".")
                 .send();
     }
@@ -124,7 +123,7 @@ public class CombatLogger implements Listener {
                 .addTextFragment(" killed ")
                 .addPlayerFragment(player)
                 .addTextFragment(" with ")
-                .addItemFragment(item, SquishLogs.highlightColor)
+                .addItemFragment(item, true)
                 .addTextFragment(".")
                 .send();
     }
@@ -144,7 +143,7 @@ public class CombatLogger implements Listener {
                     .addTextFragment(" was damaged by ")
                     .addPlayerFragment(damager)
                     .addTextFragment(" for ")
-                    .addTextFragment(String.valueOf(event.getFinalDamage()), SquishLogs.highlightColor)
+                    .addTextFragment(String.valueOf(event.getFinalDamage()), true)
                     .addTextFragment(" damage.")
                     .send();
             return;
@@ -159,7 +158,7 @@ public class CombatLogger implements Listener {
                 .setCategory("Combat | PvP")
                 .addPlayerFragment(player)
                 .addTextFragment(" was killed by a ")
-                .addTextFragment(event.getDamager().getName(), SquishLogs.highlightColor)
+                .addTextFragment(event.getDamager().getName(), true)
                 .addTextFragment(".")
                 .send();
     }

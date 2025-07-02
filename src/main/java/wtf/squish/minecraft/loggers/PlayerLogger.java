@@ -49,9 +49,9 @@ public class PlayerLogger implements Listener {
                 .setCategory("Player | Teleport")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" teleported from ")
-                .addLocationFragment(event.getFrom(), SquishLogs.highlightColor)
+                .addLocationFragment(event.getFrom(), true)
                 .addTextFragment(" to ")
-                .addLocationFragment(event.getTo(), SquishLogs.highlightColor)
+                .addLocationFragment(event.getTo(), true)
                 .addTextFragment(".")
                 .send();
     }
@@ -65,7 +65,7 @@ public class PlayerLogger implements Listener {
                 .setCategory("Player | Gamemode")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" had their gamemode changed to ")
-                .addTextFragment(event.getNewGameMode().name(), SquishLogs.highlightColor)
+                .addTextFragment(event.getNewGameMode().name(), true)
                 .addTextFragment(".")
                 .send();
     }
@@ -90,7 +90,7 @@ public class PlayerLogger implements Listener {
                     .setCategory("Player | Villager Trade")
                     .addPlayerFragment(player)
                     .addTextFragment(" traded with a villager receiving ")
-                    .addItemFragment(event.getCurrentItem(), SquishLogs.highlightColor)
+                    .addItemFragment(event.getCurrentItem(), true)
                     .addTextFragment(".")
                     .send();
         } else {
@@ -120,7 +120,7 @@ public class PlayerLogger implements Listener {
                 .setCategory("Player | Advancement")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" earned the advancement ")
-                .addTextFragment(display, SquishLogs.highlightColor)
+                .addTextFragment(display, true)
                 .withMetadata("Description", description)
                 .addTextFragment(".")
                 .send();
@@ -141,7 +141,7 @@ public class PlayerLogger implements Listener {
                         // I'm aware getName is deprecated, but I don't want *client side* translations since all this code only runs serverside
                         // Since Squish only supports English, thats the only language I want to use
                         // Spigot's really making it hard to make me want to make minecraft plugins with shit like this lol
-                        .addTextFragment(event.getNewEffect().getType().getName(), SquishLogs.highlightColor)
+                        .addTextFragment(event.getNewEffect().getType().getName(), true)
                         .addTextFragment(".")
                         .send();
             }
@@ -173,7 +173,7 @@ public class PlayerLogger implements Listener {
                         .setCategory("Player | Potion")
                         .addPlayerFragment(player)
                         .addTextFragment(" had their ")
-                        .addTextFragment(event.getOldEffect().getType().getName(), SquishLogs.highlightColor)
+                        .addTextFragment(event.getOldEffect().getType().getName(), true)
                         .addTextFragment(" effect removed.")
                         .send();
             }

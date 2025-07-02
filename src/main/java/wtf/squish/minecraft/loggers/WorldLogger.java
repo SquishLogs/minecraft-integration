@@ -12,7 +12,6 @@ import org.bukkit.event.raid.RaidStopEvent;
 import org.bukkit.event.raid.RaidTriggerEvent;
 import org.bukkit.inventory.ItemStack;
 import wtf.squish.minecraft.GameLog;
-import wtf.squish.minecraft.SquishLogs;
 
 public class WorldLogger implements Listener {
     @EventHandler
@@ -24,7 +23,7 @@ public class WorldLogger implements Listener {
                 .setCategory("World | Raid")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" triggered a raid at ")
-                .addLocationFragment(event.getRaid().getLocation(), SquishLogs.highlightColor)
+                .addLocationFragment(event.getRaid().getLocation(), true)
                 .addTextFragment(".")
                 .send();
     }
@@ -34,7 +33,7 @@ public class WorldLogger implements Listener {
         new GameLog()
                 .setCategory("World | Raid")
                 .addTextFragment("Raid at ")
-                .addLocationFragment(event.getRaid().getLocation(), SquishLogs.highlightColor)
+                .addLocationFragment(event.getRaid().getLocation(), true)
                 .addTextFragment(" has finished.")
                 .send();
     }
@@ -45,7 +44,7 @@ public class WorldLogger implements Listener {
         new GameLog()
                 .setCategory("World | Raid")
                 .addTextFragment("Raid at ")
-                .addLocationFragment(event.getRaid().getLocation(), SquishLogs.highlightColor)
+                .addLocationFragment(event.getRaid().getLocation(), true)
                 .addTextFragment(" was stopped.")
                 .send();
     }
@@ -68,9 +67,9 @@ public class WorldLogger implements Listener {
                 .setCategory("World | Mob Renamed")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" renamed ")
-                .addTextFragment(name, SquishLogs.highlightColor)
+                .addTextFragment(name, true)
                 .addTextFragment(" to ")
-                .addTextFragment(item.getItemMeta().getDisplayName(), SquishLogs.highlightColor)
+                .addTextFragment(item.getItemMeta().getDisplayName(), true)
                 .send();
     }
 
@@ -85,7 +84,7 @@ public class WorldLogger implements Listener {
                 .setCategory("World | Fire")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" lit a fire at ")
-                .addLocationFragment(event.getBlockPlaced().getLocation(), SquishLogs.highlightColor)
+                .addLocationFragment(event.getBlockPlaced().getLocation(), true)
                 .send();
     }
 
@@ -106,9 +105,9 @@ public class WorldLogger implements Listener {
         new GameLog()
                 .setCategory("World | Boss")
                 .addTextFragment("A ")
-                .addTextFragment(event.getEntityType().name(), SquishLogs.highlightColor)
+                .addTextFragment(event.getEntityType().name(), true)
                 .addTextFragment(" spawned at ")
-                .addLocationFragment(event.getLocation(), SquishLogs.highlightColor)
+                .addLocationFragment(event.getLocation(), true)
                 .send();
     }
 }

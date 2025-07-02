@@ -4,7 +4,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerCommandEvent;
 import wtf.squish.minecraft.GameLog;
-import wtf.squish.minecraft.SquishLogs;
 
 public class ServerLogger implements Listener {
     @EventHandler
@@ -15,7 +14,7 @@ public class ServerLogger implements Listener {
         new GameLog()
                 .setCategory("System | Command")
                 .addTextFragment("Server ran console command ")
-                .addTextFragment(event.getCommand(), SquishLogs.highlightColor)
+                .addTextFragment(event.getCommand(), true)
                 .addTextFragment(".")
                 .send();
     }

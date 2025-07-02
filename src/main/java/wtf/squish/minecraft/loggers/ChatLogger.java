@@ -17,7 +17,7 @@ public class ChatLogger implements Listener {
                 .setCategory("Chat | Message")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" said ")
-                .addTextFragment(event.getMessage(), SquishLogs.highlightColor)
+                .addTextFragment(event.getMessage(), true)
                 .addTextFragment(".")
                 .send();
     }
@@ -31,7 +31,7 @@ public class ChatLogger implements Listener {
                 .setCategory("Chat | Command")
                 .addPlayerFragment(event.getPlayer())
                 .addTextFragment(" ran command ")
-                .addTextFragment(event.getMessage(), SquishLogs.highlightColor)
+                .addTextFragment(event.getMessage(), true)
                 .addTextFragment(".")
                 .send();
     }

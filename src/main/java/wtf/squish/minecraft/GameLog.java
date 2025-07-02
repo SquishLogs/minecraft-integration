@@ -25,15 +25,18 @@ public class GameLog {
         this.fragments.add(fragment);
         return this;
     }
-    public GameLog addTextFragment(String text, Color highlightColor) {
+
+    // Text Fragments
+    public GameLog addTextFragment(String text, boolean highlight) {
         return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
                 .setData("text", text)
-                .setData("color", highlightColor));
+                .setData("color", highlight ? SquishLogs.highlightColor : null));
     }
     public GameLog addTextFragment(String text) {
-        return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
-                .setData("text", text));
+        return this.addTextFragment(text, false);
     }
+
+    // Player Fragment
     public GameLog addPlayerFragment(Player player) {
         return this.addRawFragment(new Fragment(Fragment.FragmentType.Player)
                 .setData("name", player.getName())
@@ -43,17 +46,17 @@ public class GameLog {
                 .setData("hunger", player.getFoodLevel())
                 .setData("location", formatLocation(player.getLocation())));
     }
-    public GameLog addLocationFragment(Location location, Color highlightColor) {
-        return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
-                .setData("text", formatLocation(location))
-                .setData("color", highlightColor));
+
+    // Location (internally text) Fragments
+    public GameLog addLocationFragment(Location location, boolean highlight) {
+        return this.addTextFragment(formatLocation(location), highlight);
     }
     public GameLog addLocationFragment(Location location) {
-        return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
-                .setData("text", formatLocation(location)));
+        return this.addLocationFragment(location, false);
     }
 
-    public GameLog addItemFragment(ItemStack item, Color highlightColor) {
+    // Item (internally text) Fragments
+    public GameLog addItemFragment(ItemStack item, boolean highlight) {
         String itemName = item.getType().name();
         ItemMeta meta = item.getItemMeta();
         if(meta != null) {
@@ -73,13 +76,13 @@ public class GameLog {
 
         return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
                 .setData("text", itemName)
-                .setData("color", highlightColor))
+                .setData("color", highlight ? SquishLogs.highlightColor : null))
                 .withMetadata("Item Type", item.getType().name())
                 .withMetadata("Amount", String.valueOf(item.getAmount()))
                 .withMetadata("Enchantments", enchantments.toString());
     }
     public GameLog addItemFragment(ItemStack item) {
-        return this.addItemFragment(item, null);
+        return this.addItemFragment(item, false);
     }
 
     public GameLog withMetadata(String title, String value) {
