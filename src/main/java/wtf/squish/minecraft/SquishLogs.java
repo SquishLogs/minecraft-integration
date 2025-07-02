@@ -5,7 +5,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import wtf.squish.minecraft.loggers.ChatLogger;
-import wtf.squish.minecraft.loggers.PlayerListener;
+import wtf.squish.minecraft.loggers.PlayerLogger;
+import wtf.squish.minecraft.loggers.ServerLogger;
 
 import java.awt.*;
 import java.net.URI;
@@ -17,10 +18,10 @@ public class SquishLogs extends JavaPlugin {
     public static SquishServerInformation serverInformation;
     public static Websocket websocket;
     public static Color highlightColor = new Color(29, 97, 129);
+    public static int minecraftMajor;
+    public static int minecraftMinor;
 
     private static SquishLogs instance;
-    private static int minecraftMajor;
-    private static int minecraftMinor;
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
             .connectTimeout(Duration.ofSeconds(5))
@@ -58,7 +59,8 @@ public class SquishLogs extends JavaPlugin {
 
         // Register our loggers
         getServer().getPluginManager().registerEvents(new ChatLogger(), this);
-        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerLogger(), this);
+        getServer().getPluginManager().registerEvents(new ServerLogger(), this);
 
         // Connect to the websocket
         websocket = new Websocket(URI.create(serverInformation.getSocket().getIpAddress()));
@@ -78,6 +80,9 @@ public class SquishLogs extends JavaPlugin {
     }
     protected static HttpClient getHttpClient() {
         return httpClient;
+    }
+    public static SquishLogs getInstance() {
+        return SquishLogs.instance;
     }
 
     public static void registerPlayer(Player player) {
