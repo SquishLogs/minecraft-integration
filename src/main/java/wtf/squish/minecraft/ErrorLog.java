@@ -1,7 +1,5 @@
 package wtf.squish.minecraft;
 
-import wtf.squish.minecraft.exceptions.HttpFailedException;
-
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpRequest;
@@ -73,30 +71,30 @@ public class ErrorLog {
     private String formatGetParameters(String communityToken) {
         StringBuilder params = new StringBuilder();
 
-        params.append(formatSingleGetParamater("token", communityToken));
+        params.append(formatSingleGetParameter("token", communityToken));
         params.append("&");
-        params.append(formatSingleGetParamater("error", this.error));
+        params.append(formatSingleGetParameter("error", this.error));
         params.append("&");
-        params.append(formatSingleGetParamater("stack", this.stack));
+        params.append(formatSingleGetParameter("stack", this.stack));
         params.append("&");
 
         CRC32 crc = new CRC32();
         crc.update((error + stack).getBytes());
-        params.append(formatSingleGetParamater("hash", String.valueOf(crc.getValue())));
+        params.append(formatSingleGetParameter("hash", String.valueOf(crc.getValue())));
         SquishLogs.log("Error hashed as " + crc.getValue());
         params.append("&");
 
-        params.append(formatSingleGetParamater("gmv", SquishLogs.getInstance().getServer().getVersion()
+        params.append(formatSingleGetParameter("gmv", SquishLogs.getInstance().getServer().getVersion()
                 + " (Bukkit "
                 + SquishLogs.getInstance().getServer().getBukkitVersion() + ")"));
         params.append("&");
-        params.append(formatSingleGetParamater("os", System.getProperty("os.name")));
+        params.append(formatSingleGetParameter("os", System.getProperty("os.name")));
         params.append("&");
-        params.append(formatSingleGetParamater("realm", "N/A"));
+        params.append(formatSingleGetParameter("realm", "N/A"));
 
         return params.toString();
     }
-    private String formatSingleGetParamater(String key, String value) {
+    private String formatSingleGetParameter(String key, String value) {
         return URLEncoder.encode(key, StandardCharsets.UTF_8) + "=" + URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 }
