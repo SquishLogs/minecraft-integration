@@ -1,20 +1,20 @@
 package wtf.squish.minecraft;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import org.bukkit.Location;
-import org.bukkit.entity.Item;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class LogBuilder {
     private String category = "Unknown Category";
-    private ArrayList<Fragment> fragments = new ArrayList<>();
+    private final ArrayList<Fragment> fragments = new ArrayList<>();
 
     public LogBuilder setCategory(String category) {
         this.category = category;
@@ -51,6 +51,35 @@ public class LogBuilder {
     public LogBuilder addLocationFragment(Location location) {
         return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
                 .setData("text", formatLocation(location)));
+    }
+
+    public LogBuilder addItemFragment(ItemStack item, Color highlightColor) {
+        String itemName = item.getType().name();
+        ItemMeta meta = item.getItemMeta();
+        if(meta != null) {
+            if (meta.hasDisplayName())
+                itemName = meta.getDisplayName();
+        }
+        itemName = item.getAmount() + "x " + itemName;
+
+        StringBuilder enchantments = new StringBuilder();
+        if(item.getEnchantments().isEmpty()) {
+            enchantments.append("None");
+        } else {
+            for(Map.Entry<Enchantment, Integer> entry : item.getEnchantments().entrySet()) {
+                enchantments.append(entry.getKey().getKey()).append(" ").append(entry.getValue()).append(", ");
+            }
+        }
+
+        return this.addRawFragment(new Fragment(Fragment.FragmentType.Text)
+                .setData("text", itemName)
+                .setData("color", highlightColor))
+                .withMetadata("Item Type", item.getType().name())
+                .withMetadata("Amount", String.valueOf(item.getAmount()))
+                .withMetadata("Enchantments", enchantments.toString());
+    }
+    public LogBuilder addItemFragment(ItemStack item) {
+        return this.addItemFragment(item, null);
     }
 
     public LogBuilder withMetadata(String title, String value) {
