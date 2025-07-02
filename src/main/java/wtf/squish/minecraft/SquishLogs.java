@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import wtf.squish.minecraft.loggers.ChatLogger;
+import wtf.squish.minecraft.loggers.CombatLogger;
 import wtf.squish.minecraft.loggers.PlayerLogger;
 import wtf.squish.minecraft.loggers.ServerLogger;
 
@@ -59,6 +60,7 @@ public class SquishLogs extends JavaPlugin {
 
         // Register our loggers
         getServer().getPluginManager().registerEvents(new ChatLogger(), this);
+        getServer().getPluginManager().registerEvents(new CombatLogger(), this);
         getServer().getPluginManager().registerEvents(new PlayerLogger(), this);
         getServer().getPluginManager().registerEvents(new ServerLogger(), this);
 
