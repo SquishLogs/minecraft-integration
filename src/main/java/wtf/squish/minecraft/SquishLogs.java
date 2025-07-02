@@ -4,10 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import wtf.squish.minecraft.loggers.ChatLogger;
-import wtf.squish.minecraft.loggers.CombatLogger;
-import wtf.squish.minecraft.loggers.PlayerLogger;
-import wtf.squish.minecraft.loggers.ServerLogger;
+import wtf.squish.minecraft.loggers.*;
 
 import java.awt.*;
 import java.net.URI;
@@ -63,6 +60,7 @@ public class SquishLogs extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CombatLogger(), this);
         getServer().getPluginManager().registerEvents(new PlayerLogger(), this);
         getServer().getPluginManager().registerEvents(new ServerLogger(), this);
+        getServer().getPluginManager().registerEvents(new WorldLogger(), this);
 
         // Connect to the websocket
         websocket = new Websocket(URI.create(serverInformation.getSocket().getIpAddress()));
